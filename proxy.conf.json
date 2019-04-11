@@ -1,0 +1,8 @@
+{
+  "/api/*": {
+    "target": "https://financialmodelingprep.com",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

@@ -1,0 +1,19 @@
+mat-toolbar button{
+  background: none;
+  border: none;
+}
+
+.fa-ellipsis-v{
+  color: white;
+  font-size: 20px;
+}
+
+.fa-ellipsis-v:hover{
+  cursor: pointer;
+}
+mat-toolbar button:focus {
+  outline:0;
+}
+button{
+  outline: none;
+}

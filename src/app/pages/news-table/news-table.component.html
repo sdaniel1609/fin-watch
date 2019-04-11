@@ -1,0 +1,34 @@
+<div class="container">
+  <h2 class="m-4">Latest Market News</h2>
+</div>
+<div class="container">
+  <div class="mat-elevation-z8">
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="publicationDate" >
+    <th class="date" mat-header-cell *matHeaderCellDef> Publication Date </th>
+    <td mat-cell id="dateString" *matCellDef="let news"> {{news.publication_date | date:'short'}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="company">
+    <th class="companyName" mat-header-cell *matHeaderCellDef> Company </th>
+    <td mat-cell *matCellDef="let news"> {{news.company.name}} ({{news.company.ticker}})</td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="title">
+    <th class="title" mat-header-cell *matHeaderCellDef> Title </th>
+    <td mat-cell *matCellDef="let news"><a target="_blank" href={{news.url}}>{{news.title}} </a></td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<mat-toolbar color="warn">
+  <button [matMenuTriggerFor]="menu" id="icon-button">
+    <i class="fas fa-ellipsis-v"></i>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button routerLink="/dashboard" mat-menu-item>
+      <span>Dashboard</span>
+    </button>
+    <button routerLink="/data-table" mat-menu-item>
+      <span>Company Lookup</span>
+    </button>
+    <button mat-menu-item routerLink="/forex">
+      <span>Forex</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+<router-outlet></router-outlet>
+<!-- Routed components go here -->
