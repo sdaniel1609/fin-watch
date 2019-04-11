@@ -1,0 +1,8 @@
+<div class="container">
+ <div *ngFor="let i of index">
+   <h5>Index: {{i.name}} </h5>
+   <h6>Value: {{i.value}}</h6>
+   <h6> 1 Month change: {{i.weekChange() | percent:'1.2' }}</h6>
+   </div>
+ </div>
+
