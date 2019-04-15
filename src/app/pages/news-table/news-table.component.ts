@@ -26,10 +26,8 @@ export class NewsTableComponent implements OnInit {
   }
 
   ngOnInit() {
-   /* this.getNews();
+   this.getNews();
     this.dataSource = new NewsDataSource(this.newsService);
-    this.newsService.getNews()
-      .subscribe((news => console.log(news)));*/
     //   this.newsService.getNews().subscribe(news => console.log(news))
   }
 }

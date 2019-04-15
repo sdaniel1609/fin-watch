@@ -1,0 +1,55 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <form class="example-form">
+        <mat-form-field class="example-full-width">
+          <input matInput [(ngModel)]="company" name="company" (keyup.enter)="getStockTicker()" placeholder="Search Security">
+        </mat-form-field>
+      </form>
+    </div>
+  </div>
+  <div *ngIf="dataIsLoaded" class="row">
+    <div class="col-12">
+      <h5>Stock Summary</h5>
+      <h6>Legal Name: {{stockSummary?.legal_name}}</h6>
+      <h6>CEO: {{stockSummary?.ceo}}</h6>
+      <h6>Industry Category: {{stockSummary?.industry_category}}</h6>
+    </div>
+  </div>
+  <div *ngIf="dataIsLoaded" class="row">
+    <div class="col-12 col-lg-8">
+      <div>
+        <canvas
+          baseChart
+          [chartType]="'line'"
+          [datasets]="chartData"
+          [labels]="chartLabels"
+          [options]="chartOptions"
+          [legend]="true">
+        </canvas>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="dataIsLoaded"  class="row">
+    <div class="col-12 col-lg-4">
+      <h6>Open: {{stockPriceInfo?.open}}</h6>
+      <h6>High: {{stockPriceInfo?.high}}</h6>
+      <h6>Close: {{stockPriceInfo?.close}}</h6>
+      <h6>Date: {{stockPriceInfo?.date}}</h6>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="dataIsLoaded" class="container">
+  <div class="row">
+    <div class="col-8">
+      <h5>{{stockSummary?.legal_name}} News</h5>
+      <mat-card *ngFor="let n of news">
+        <mat-card-header>
+          <mat-card-title>{{n?.title}}</mat-card-title>
+        </mat-card-header>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
