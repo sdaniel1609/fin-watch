@@ -19,12 +19,17 @@ export class IndicesService {
         catchError(this.handleError));
   }
 
-  getIndexHistorical(index: string) {
+  getIndexHistoricalValue(index: string) {
     const url = `${this.url}${index}/historical_data/level`;
     return this.http.get(url)
       .pipe(
         map(res => res['historical_data'])
       );
+  }
+
+  searchIndex(query: string) {
+    const url = `https://api-v2.intrinio.com/indices/stock_market/search?query=${query}`;
+    return this.http.get(url);
   }
 
   private handleError(error: HttpErrorResponse) {

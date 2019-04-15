@@ -11,12 +11,13 @@ export class ForexService {
 
   constructor(private http: HttpClient) { }
 
-  private url = 'https://api-v2.intrinio.com/forex/prices/EURUSD/D1?page_size=10';
+  private url = 'https://api-v2.intrinio.com/forex/prices/EURUSD/D1';
 
-  getCurrencyPrice() {
-    return this.http.get(this.url)
+  getCurrencyPrice(currencyPair: string) {
+    const url = `https://api-v2.intrinio.com/forex/prices/${currencyPair}/D1`
+    return this.http.get(url)
       .pipe(
-        map(res => res ['prices'])
+        map(res => res ['prices'][0])
       );
   }
 }

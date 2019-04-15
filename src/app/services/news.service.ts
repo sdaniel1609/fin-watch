@@ -9,9 +9,10 @@ import {map} from 'rxjs/operators';
 })
 export class NewsService {
 
-  private url = 'https://api-v2.intrinio.com/companies/news?page_size=10';
+  private url = 'https://api-v2.intrinio.com/companies/news?page_size=5';
 
   private companyUrl = 'https://api-v2.intrinio.com/companies/'
+
   constructor(private http: HttpClient) { }
 
   getNews(): Observable<News[]> {
@@ -24,5 +25,13 @@ export class NewsService {
   getCompanyInfo(company: string): Observable<any> {
     const url = `${this.companyUrl}${company}`;
     return this.http.get(url);
+  }
+
+  getCompanyNews(stock: string) {
+    const url = `https://api-v2.intrinio.com/companies/${stock}/news?page_size=10`;
+    return this.http.get(url)
+      .pipe(
+        map( res => res['news'])
+      );
   }
 }

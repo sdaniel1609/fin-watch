@@ -13,53 +13,63 @@ export interface HistoricalIndex {
 })
 export class IndicesComponent implements OnInit {
 
-  index = [
+  trackedIndices = [
     {
       symbol: 'DJI',
       name: 'Dow Jones Industrial Average',
       value: null,
-      historicalData: [],
-      weekChange() {
-        const firstValue = this.historicalData[0].value;
-        const lastValue  = this.historicalData[6].value;
-        const difference = firstValue - lastValue;
-        return difference / lastValue ;
-      }
-    },
+      historicalData: [{
+        date: null,
+        value: null
+      }],
+     },
     {
       symbol: 'SPX',
-      name: 'S&P 500 INDEX',
+      name: 'S&P 500',
       value: null,
-      historicalData: [],
-      weekChange() {
-        const firstValue = this.historicalData[0].value;
-        const lastValue  = this.historicalData[6].value;
-        const difference = lastValue - firstValue;
-        return difference / lastValue ;
-      }
+      historicalData: [{
+        date: null,
+        value: null
+      }],
     },
+    {
+      symbol: 'NDX',
+      name: 'NASDAQ 100 Index',
+      value: null,
+      historicalData: [{
+        date: null,
+        value: null
+      }],
+    }
   ];
+
+  periods = ['1 Week', '1 Month', '6 Months', '1 Year'];
+
+  indexValueChange(currentValue: number, historicalValue: number) {
+    const difference = currentValue - historicalValue;
+    return difference / historicalValue;
+  }
 
   constructor(private indicesService: IndicesService) { }
 
 
-  getAllIndexValues(): void {
-    for (let i = 0; i < this.index.length; i++) {
-      this.indicesService.getIndexValue(this.index[i].symbol)
-        .subscribe(indexValue => this.index[i].value = indexValue);
+   getIndexValue(): void {
+    for (let i = 0; i < this.trackedIndices.length; i++) {
+      this.indicesService.getIndexValue(this.trackedIndices[i].symbol)
+        .subscribe(indexValue => this.trackedIndices[i].value = indexValue);
     }
   }
 
-  getAllIndexHistorical(): void {
-    for (let i = 0; i < this.index.length; i++) {
-      this.indicesService.getIndexHistorical(this.index[i].symbol)
-        .subscribe(indexHistoric => this.index[i].historicalData = indexHistoric);
+  getIndexHistoricalValue(): void {
+    for (let i = 0; i < this.trackedIndices.length; i++) {
+      this.indicesService.getIndexHistoricalValue(this.trackedIndices[i].symbol)
+        .subscribe(indexHistoric => this.trackedIndices[i].historicalData = indexHistoric);
     }
   }
 
   ngOnInit() {
-  this.getAllIndexValues();
-  this.getAllIndexHistorical();
-  console.log(this.index);
+  this.getIndexValue();
+  this.getIndexHistoricalValue();
+
   }
 }

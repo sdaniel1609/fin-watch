@@ -1,3 +1,4 @@
+/*
 table {
   width: 100%;
   margin-top: 20px;
@@ -11,4 +12,9 @@ table {
 }
 .companyName {
   width: 20%;
+}
+*/
+
+mat-card {
+  margin-bottom: 20px;
 }

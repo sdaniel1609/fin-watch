@@ -21,14 +21,17 @@ import {NewsTableComponent} from './pages/news-table/news-table.component';
 import {MatCardModule} from '@angular/material/card';
 import { ForexComponent } from './pages/forex/forex.component';
 import {ChartsModule} from 'ng2-charts';
-import { CompanyLookupComponent } from './pages/dashboard/company-lookup/company-lookup.component';
+import { CompanyLookupComponent } from './pages/company-lookup/company-lookup.component';
 import {MatInputModule} from '@angular/material/input';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatSelectModule} from '@angular/material/select';
+import { StocksComponent } from './pages/stocks/stocks.component';
 
 const appRoutes: Routes = [
+  { path: '', component: DashboardComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'forex', component: ForexComponent },
-
+  { path: 'company-lookup', component: CompanyLookupComponent },
 ];
 
 @NgModule({
@@ -40,7 +43,8 @@ const appRoutes: Routes = [
     DataTableComponent,
     NewsTableComponent,
     ForexComponent,
-    CompanyLookupComponent
+    CompanyLookupComponent,
+    StocksComponent
   ],
   imports: [
     MatPaginatorModule,
@@ -59,7 +63,8 @@ const appRoutes: Routes = [
     MatSortModule,
     MatInputModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSelectModule
   ],
   providers: [IndicesService, HttpClientModule, {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }],
   bootstrap: [AppComponent]

@@ -1,3 +1,4 @@
+<!--
 <div>
   <div style="display: block">
     <canvas baseChart
@@ -6,5 +7,22 @@
             [options]="barChartOptions"
             [chartType]="barChartType"
             [legend]="barChartLegend"></canvas>
+  </div>
+</div>
+-->
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h5>Currencies</h5>
+      <table class="table table-bordered">
+        <tbody>
+        <tr *ngFor="let currency of currencyPairs">
+          <td>{{currency.currencyPair}}</td>
+          <td>{{currency.currencyPairPrice?.close_bid | number: '1.1' }}</td>
+          <td id="date">{{currency.currencyPairPrice?.occurred_at | date}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
