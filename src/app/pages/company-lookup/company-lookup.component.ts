@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {StocksService} from '../../services/stocks.service';
 import {Chart} from 'chart.js';
-import {t} from '@angular/core/src/render3';
 import {NewsService} from '../../services/news.service';
 
 @Component({
@@ -19,20 +18,15 @@ export class CompanyLookupComponent implements OnInit {
   dataIsLoaded = false;
   stockPriceInfo;
   news = [];
+  chart: Chart;
 
   constructor(private stocksService: StocksService,
               private newsService: NewsService) { }
 
-  chartOptions = {
-    responsive: true
-  };
 
   chartData = [
     { data: this.closePrice, label: '' },
   ];
-
-  chartLabels = this.closeDate;
-
 
   getStockTicker(): void {
     console.log(this.company);
@@ -60,16 +54,64 @@ export class CompanyLookupComponent implements OnInit {
   }
 
   loadData(): void {
-      for (let i = 0; i < 30; i++) {
-        this.stocksService.getStockPrices(this.companyTicker)
-          .subscribe(res => {
-            this.stockPriceInfo = res['stock_prices'][0];
-            this.closePrice.push(res['stock_prices'][i].close);
-            this.closeDate.push( res['stock_prices'][i].date);
-          });
-      }
-    this.dataIsLoaded = true;
+    if (this.closeDate.length === 0 || this.closePrice.length === 0) {
+      this.stocksService.getStockPrices(this.companyTicker)
+        .subscribe(
+          (res => {
+            for (let i = 0; i < 30; i++) {
+              this.stockPriceInfo = res['stock_prices'][0];
+              this.closePrice.push(res['stock_prices'][i].close);
+              this.closeDate.push( res['stock_prices'][i].date);
+            }
+          }),
+          (error1 => console.log(error1)),
+          (() => this.loadChart())
+        );
+      this.dataIsLoaded = true;
+    } else {
+      this.refreshData();
+    }
   }
+
+  refreshData(): void {
+    this.closePrice = [];
+    this.closeDate = [];
+    this.chart.destroy();
+    this.loadData();
+  }
+
+  loadChart(): void {
+    console.log('Loading Chart...')
+    console.log(this.closePrice)
+    console.log(this.closeDate)
+    this.chart = new Chart('canvas', {
+      type: 'line',
+      data: {
+        labels: this.closeDate,
+        datasets: [
+          {
+            data: this.closePrice,
+            borderColor: '#ba0044',
+            fill: false
+          }
+        ]
+      },
+      options: {
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            display: true
+          }],
+          yAxes: [{
+            display: true
+          }],
+        }
+      }
+    });
+  }
+
 
 
   ngOnInit() {
