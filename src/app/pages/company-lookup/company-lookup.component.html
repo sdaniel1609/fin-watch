@@ -35,11 +35,11 @@
 
 <div *ngIf="dataIsLoaded" class="container">
   <div class="row">
-    <div class="col-8">
+    <div class="col-12">
       <h5>{{stockSummary?.legal_name}} News</h5>
       <mat-card *ngFor="let n of news">
         <mat-card-header>
-          <mat-card-title>{{n?.title}}</mat-card-title>
+          <mat-card-title><a target="_blank" href="{{n?.url}}">{{n?.title}}</a></mat-card-title>
         </mat-card-header>
       </mat-card>
     </div>
