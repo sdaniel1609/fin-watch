@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {StocksService} from '../../services/stocks.service';
 import {Chart} from 'chart.js';
 import {NewsService} from '../../services/news.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-company-lookup',
@@ -10,7 +11,8 @@ import {NewsService} from '../../services/news.service';
 })
 export class CompanyLookupComponent implements OnInit {
 
-  company: string;
+  companyName: string;
+  company: any = [];
   companyTicker: string;
   closePrice = [];
   closeDate = [];
@@ -21,22 +23,17 @@ export class CompanyLookupComponent implements OnInit {
   chart: Chart;
 
   constructor(private stocksService: StocksService,
-              private newsService: NewsService) { }
+              private newsService: NewsService,
+              private route: ActivatedRoute) { }
 
-
-  chartData = [
-    { data: this.closePrice, label: '' },
-  ];
 
   getStockTicker(): void {
-    console.log(this.company);
-      this.stocksService.getStockTicker(this.company)
+      this.stocksService.getStockTicker(this.companyName)
         .subscribe(
-          (res => {this.companyTicker = res; }),
+          (res => {this.company = res; }),
           (error1 => console.log(error1)),
           (() => {
             this.loadData();
-            this.chartData[0].label = this.companyTicker;
             this.getStockSummary();
             this.getStockNews();
           })
@@ -44,18 +41,18 @@ export class CompanyLookupComponent implements OnInit {
     }
 
   getStockSummary(): void {
-    this.stocksService.getStockSummary(this.companyTicker)
+    this.stocksService.getStockSummary(this.company.ticker)
       .subscribe(stockSummary => this.stockSummary = stockSummary);
   }
 
   getStockNews(): void {
-    this.newsService.getCompanyNews(this.companyTicker)
+    this.newsService.getCompanyNews(this.company.ticker)
       .subscribe(res => this.news = res);
   }
 
   loadData(): void {
     if (this.closeDate.length === 0 || this.closePrice.length === 0) {
-      this.stocksService.getStockPrices(this.companyTicker)
+      this.stocksService.getStockPrices(this.company.ticker)
         .subscribe(
           (res => {
             for (let i = 0; i < 30; i++) {
@@ -65,7 +62,11 @@ export class CompanyLookupComponent implements OnInit {
             }
           }),
           (error1 => console.log(error1)),
-          (() => this.loadChart())
+          (() => {
+            this.closePrice.reverse();
+            this.closeDate.reverse();
+            this.loadChart();
+          })
         );
       this.dataIsLoaded = true;
     } else {
@@ -112,9 +113,16 @@ export class CompanyLookupComponent implements OnInit {
     });
   }
 
-
+  loadId(): void {
+    if (this.companyName === undefined) {
+      this.route.params.subscribe((param) => {
+        this.companyName = param['id'];
+      });
+      this.getStockTicker();
+    }
+  }
 
   ngOnInit() {
-    console.log(this.companyTicker);
+    this.loadId();
   }
 }
