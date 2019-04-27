@@ -11,6 +11,7 @@ export interface HistoricalIndex {
   templateUrl: './indices.component.html',
   styleUrls: ['./indices.component.css']
 })
+
 export class IndicesComponent implements OnInit {
 
   trackedIndices = [
@@ -43,7 +44,6 @@ export class IndicesComponent implements OnInit {
     }
   ];
 
-  periods = ['1 Week', '1 Month', '6 Months', '1 Year'];
 
   indexValueChange(currentValue: number, historicalValue: number) {
     const difference = currentValue - historicalValue;

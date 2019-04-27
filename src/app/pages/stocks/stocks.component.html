@@ -2,7 +2,7 @@
 <table class="table table-bordered">
   <tbody>
   <tr *ngFor="let stock of stocks">
-    <td>{{stock.name}}</td>
+    <td> <a routerLink="/company-lookup/{{stock.name}}">{{stock.name}}</a></td>
     <td>{{stock.security}}</td>
     <td>{{stock.stock_prices[0]?.close}}</td>
     <td [ngClass]="((stock.stock_prices[0]?.close - stock.stock_prices[30]?.close)> 0)?'green':'red'">{{stock.stock_prices[0]?.close - stock.stock_prices[30]?.close | number: '1.0'}} ({{stockValueChange(stock.stock_prices[0]?.close, stock.stock_prices[30]?.close) | percent: '1.2'}})</td>

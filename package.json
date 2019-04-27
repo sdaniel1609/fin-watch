@@ -28,6 +28,7 @@
     "core-js": "^2.5.4",
     "ng2-charts": "^2.2.2",
     "rxjs": "~6.2.0",
+    "sweetalert2": "^8.8.7",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {

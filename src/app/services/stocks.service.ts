@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {map, mergeMap} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {Company} from '../model/company';
+
 
 @Injectable({
   providedIn: 'root'
@@ -13,21 +16,33 @@ export class StocksService {
     this.stock = '';
   }
 
+  searchCompanies(companyName: string): Observable<Company> {
+    const url = `https://api-v2.intrinio.com/companies/search?query=${companyName}`;
+    return this.http.get<Company>(url)
+      .pipe(
+        map (response => {
+          return response['companies'];
+        })
+      );
+  }
+
+  getStockTicker(companyName: string) {
+    const url = `https://api-v2.intrinio.com/companies/search?query=${companyName}`;
+    return this.http.get(url)
+      .pipe(
+        map(res => {
+          return res['companies'][0];
+        })
+      );
+  }
+
   getStockPrices(stock: string) {
     const url = `https://api-v2.intrinio.com/securities/${stock}/prices`
     return this.http.get(url)
       .pipe(
-        map(res => res)
-      );
-  }
-
-  getStockTicker(company: string) {
-    const url = `https://api-v2.intrinio.com/companies/search?query=${company}`;
-    return this.http.get(url)
-      .pipe(
         map(res => {
-          console.log(res['companies'][0].ticker)
-          return res['companies'][0].ticker;
+          console.log('From get stock prices: ' + res['stock_prices'][0])
+          return res;
         })
       );
   }
@@ -40,7 +55,4 @@ export class StocksService {
       );
   }
 
-  updateSearch(stock: string){
-    this.stock = stock;
-  }
 }

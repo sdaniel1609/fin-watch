@@ -48,9 +48,6 @@ export class StocksComponent implements OnInit {
   }
   ngOnInit() {
     this.getStockPrices();
-    console.log(this.stocks);
-    this.stocksService.getStockPrices('AAPL')
-      .subscribe(res => console.log(res));
   }
 
 }

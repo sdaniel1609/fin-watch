@@ -26,12 +26,16 @@ import {MatInputModule} from '@angular/material/input';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
 import { StocksComponent } from './pages/stocks/stocks.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
+import {MatButtonModule} from '@angular/material/button';
 
 const appRoutes: Routes = [
   { path: '', component: DashboardComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'forex', component: ForexComponent },
   { path: 'company-lookup', component: CompanyLookupComponent },
+  { path: 'company-lookup/:id', component: CompanyLookupComponent },
 ];
 
 @NgModule({
@@ -64,7 +68,10 @@ const appRoutes: Routes = [
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSidenavModule,
+    MatListModule,
+    MatButtonModule
   ],
   providers: [IndicesService, HttpClientModule, {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }],
   bootstrap: [AppComponent]
