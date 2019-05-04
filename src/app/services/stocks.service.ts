@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
-import {Observable} from 'rxjs';
+import {forkJoin, Observable} from 'rxjs';
 import {Company} from '../model/company';
 
 
@@ -41,7 +41,6 @@ export class StocksService {
     return this.http.get(url)
       .pipe(
         map(res => {
-          console.log('From get stock prices: ' + res['stock_prices'][0])
           return res;
         })
       );

@@ -1,21 +1,20 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {Forex} from '../model/forex';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ForexService {
+export class CryptoService {
 
   constructor(private http: HttpClient) { }
 
-  getCurrencyPrice(currencyPair: string) {
-    const url = `https://api-v2.intrinio.com/forex/prices/${currencyPair}/D1`
+
+  getCryptoPrice(pair: string, exchange: string) {
+    const url = `https://api-v2.intrinio.com/crypto/prices?pair=${pair}&timeframe=h1&exchange=${exchange}`;
     return this.http.get(url)
       .pipe(
-        map(res => res ['prices'][0])
+        map( res => res['prices'])
       );
   }
 }

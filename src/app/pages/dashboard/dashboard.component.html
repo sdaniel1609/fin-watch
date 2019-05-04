@@ -1,6 +1,24 @@
 <!--
 <app-company-lookup></app-company-lookup>
 <app-news-table></app-news-table>-->
+<div class="container" *ngIf="!hide">
+  <div class="row">
+    <div class="row-12 col-lg-8">
+      <h5>Recently Searched</h5>
+      <table class="table table-bordered">
+        <tbody>
+        <tr *ngFor="let company of companies">
+          <td> <a routerLink="/company-lookup/{{company?.companyName}}">{{company?.companyName | uppercase}}</a></td>
+           <td>{{company.companyTicker}}</td>
+           <td>{{company.stockPrice[0]?.close}}</td>
+           <td [ngClass]="((company.stockPrice[0]?.close - company.stockPrice[30]?.close)> 0)?'green':'red'">{{company.stockPrice[0]?.close - company.stockPrice[30]?.close | number: '1.0'}} ({{stockValueChange(company.stockPrice[0]?.close, company.stockPrice[30]?.close) | percent: '1.2'}})</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
 <div class="container">
   <div class="row">
     <div class="col-12 col-lg-8">
@@ -14,6 +32,9 @@
   <div class="row">
     <div class="col-12 col-lg-8">
       <app-stocks></app-stocks>
+    </div>
+    <div class="col-12 col-lg-4">
+      <app-crypto></app-crypto>
     </div>
   </div>
 
