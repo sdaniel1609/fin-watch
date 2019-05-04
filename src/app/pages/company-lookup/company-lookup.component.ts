@@ -3,6 +3,7 @@ import {StocksService} from '../../services/stocks.service';
 import {Chart} from 'chart.js';
 import {NewsService} from '../../services/news.service';
 import {ActivatedRoute} from '@angular/router';
+import {IStockPrice} from '../../model/StockPrice';
 
 @Component({
   selector: 'app-company-lookup',
@@ -13,12 +14,11 @@ export class CompanyLookupComponent implements OnInit {
 
   companyName: string;
   company: any = [];
-  companyTicker: string;
   closePrice = [];
   closeDate = [];
   stockSummary;
   dataIsLoaded = false;
-  stockPriceInfo;
+  stockPriceInfo: IStockPrice;
   news = [];
   chart: Chart;
 

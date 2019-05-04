@@ -29,13 +29,28 @@ import { StocksComponent } from './pages/stocks/stocks.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import {MatButtonModule} from '@angular/material/button';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
+import {environment} from '../environments/environment';
+import {AngularFireModule} from 'angularfire2';
+import {AngularFirestoreModule} from 'angularfire2/firestore';
+import {AngularFireAuthModule} from 'angularfire2/auth';
+import {UserService} from './services/user.service';
+import { FirestoreSettingsToken } from '@angular/fire/firestore';
+import { UsersComponent } from './pages/users/users.component';
+import {AuthGuard} from './guards/auth.guard';
+import { CryptoComponent } from './pages/crypto/crypto.component';
 
 const appRoutes: Routes = [
-  { path: '', component: DashboardComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'forex', component: ForexComponent },
-  { path: 'company-lookup', component: CompanyLookupComponent },
-  { path: 'company-lookup/:id', component: CompanyLookupComponent },
+  { path: '', component: LoginComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'forex', component: ForexComponent, canActivate: [AuthGuard] },
+  { path: 'company-lookup', component: CompanyLookupComponent, canActivate: [AuthGuard] },
+  { path: 'company-lookup/:id', component: CompanyLookupComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'users', component: UsersComponent, canActivate: [AuthGuard] },
+  { path: 'crypto', component: CryptoComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
@@ -48,7 +63,11 @@ const appRoutes: Routes = [
     NewsTableComponent,
     ForexComponent,
     CompanyLookupComponent,
-    StocksComponent
+    StocksComponent,
+    LoginComponent,
+    RegisterComponent,
+    UsersComponent,
+    CryptoComponent
   ],
   imports: [
     MatPaginatorModule,
@@ -71,9 +90,12 @@ const appRoutes: Routes = [
     MatSelectModule,
     MatSidenavModule,
     MatListModule,
-    MatButtonModule
+    MatButtonModule,
+    AngularFireModule.initializeApp(environment.firebase, 'fin-watch'),
+    AngularFirestoreModule,
+    AngularFireAuthModule
   ],
-  providers: [IndicesService, HttpClientModule, {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }],
+  providers: [IndicesService, AuthGuard, UserService, HttpClientModule, { provide: FirestoreSettingsToken, useValue: {}}, {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

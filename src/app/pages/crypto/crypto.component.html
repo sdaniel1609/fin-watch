@@ -1,0 +1,23 @@
+<h5>Crypto Currency</h5>
+<table class="table table-bordered">
+  <tr>
+    <th>Crypto Pair</th>
+    <th>Exchange</th>
+    <th>Price</th>
+    <th>Date</th>
+  </tr>
+  <tbody>
+  <tr *ngFor="let crypto of cryptoPairs">
+
+    <td>{{crypto.cryptoPair | uppercase}}</td>
+
+    <td>{{crypto.exchange | uppercase}}</td>
+
+    <td>{{crypto.cryptoPrice?.close | number: '1.1' }}</td>
+
+    <td id="date">{{crypto.cryptoPrice?.time | date}}</td>
+
+  </tr>
+  </tbody>
+</table>
+

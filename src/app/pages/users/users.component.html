@@ -1,0 +1,30 @@
+<div class="container pt-4">
+  <div class="row">
+    <div class="col-12 ">
+      <h2><i class="fa fa-users"></i> Users</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <table *ngIf="users?.length > 0; else noUsers" class="table table-striped">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{user.firstName}} {{user.lastName}}</td>
+          <td>{{user.email}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<ng-template #noUsers>
+  <hr>
+  <h5>No Users in the system</h5>
+</ng-template>

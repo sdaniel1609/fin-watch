@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {SearchedCompany} from '../model/searchedCompany';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -26,7 +27,7 @@ export class LocalStorageService {
     companies.push(company);
 
     this.setLocalStorageCompanies(companies);
-    this.nextId ++;
+    this.nextId++;
   }
 
   public getCompanies() {
@@ -35,6 +36,6 @@ export class LocalStorageService {
   }
 
   private setLocalStorageCompanies(company: string[]): void {
-    localStorage.setItem('companies', JSON.stringify({companies: company }));
+    localStorage.setItem('companies', JSON.stringify({companies: company}));
   }
 }
