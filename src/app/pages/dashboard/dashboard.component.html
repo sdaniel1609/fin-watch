@@ -3,15 +3,15 @@
 <app-news-table></app-news-table>-->
 <div class="container" *ngIf="!hide">
   <div class="row">
-    <div class="row-12 col-lg-8">
+    <div class="col-12">
       <h5>Recently Searched</h5>
       <table class="table table-bordered">
         <tbody>
-        <tr *ngFor="let company of companies">
-          <td> <a routerLink="/company-lookup/{{company?.companyName}}">{{company?.companyName | uppercase}}</a></td>
-           <td>{{company.companyTicker}}</td>
-           <td>{{company.stockPrice[0]?.close}}</td>
-           <td [ngClass]="((company.stockPrice[0]?.close - company.stockPrice[30]?.close)> 0)?'green':'red'">{{company.stockPrice[0]?.close - company.stockPrice[30]?.close | number: '1.0'}} ({{stockValueChange(company.stockPrice[0]?.close, company.stockPrice[30]?.close) | percent: '1.2'}})</td>
+        <tr *ngFor="let company of loadedCompanies">
+          <td> <a routerLink="/company-lookup/{{company.name}}">{{company.name | uppercase}}</a></td>
+           <td>{{company.ticker}}</td>
+           <td>{{company.stock_prices[0]?.close}}</td>
+           <td [ngClass]="((company.stock_prices[0]?.close - company.stock_prices[30]?.close)> 0)?'green':'red'">{{company.stock_prices[0]?.close - company.stock_prices[30]?.close | number: '1.0'}} ({{stockValueChange(company.stock_prices[0]?.close, company.stock_prices[30]?.close) | percent: '1.2'}})</td>
         </tr>
         </tbody>
       </table>
@@ -21,25 +21,29 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-12 col-lg-8">
+    <div class="col-12">
       <app-indices></app-indices>
     </div>
-    <div class="col-12 col-lg-4">
-      <app-forex></app-forex>
-    </div>
   </div>
 
   <div class="row">
-    <div class="col-12 col-lg-8">
+    <div class="col-12">
       <app-stocks></app-stocks>
     </div>
-    <div class="col-12 col-lg-4">
-      <app-crypto></app-crypto>
-    </div>
   </div>
 
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-6">
+        <app-forex></app-forex>
+      </div>
+      <div class="col-12 col-lg-6">
+        <app-crypto></app-crypto>
+      </div>
+    </div>
+
   <div class="row">
-    <div class="col-12 col-lg-8">
+    <div class="col-12">
       <app-news-table></app-news-table>
     </div>
   </div>

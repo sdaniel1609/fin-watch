@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {forkJoin, Observable} from 'rxjs';
-import {Company} from '../model/company';
+import {ICompanyInfo} from '../model/ICompanyInfo';
+import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from 'angularfire2/firestore';
+import {DBStock} from '../model/DBStock';
 
 
 @Injectable({
@@ -10,25 +12,16 @@ import {Company} from '../model/company';
 })
 export class StocksService {
 
-  stock: string;
+  stockCollection: AngularFirestoreCollection<DBStock>;
+  stocks: Observable<DBStock[]>;
 
-  constructor(private http: HttpClient) {
-    this.stock = '';
+  constructor(private http: HttpClient, private afs: AngularFirestore) {
+    this.stockCollection = this.afs.collection('stocks', ref => ref.orderBy('name', 'asc'));
   }
 
-  searchCompanies(companyName: string): Observable<Company> {
+  getStockTicker(companyName: string): Observable<ICompanyInfo> {
     const url = `https://api-v2.intrinio.com/companies/search?query=${companyName}`;
-    return this.http.get<Company>(url)
-      .pipe(
-        map (response => {
-          return response['companies'];
-        })
-      );
-  }
-
-  getStockTicker(companyName: string) {
-    const url = `https://api-v2.intrinio.com/companies/search?query=${companyName}`;
-    return this.http.get(url)
+    return this.http.get<ICompanyInfo>(url)
       .pipe(
         map(res => {
           return res['companies'][0];
@@ -36,14 +29,24 @@ export class StocksService {
       );
   }
 
-  getStockPrices(stock: string) {
+  getStockTickerV2(companyName: string) {
+    const url = `https://api-v2.intrinio.com/companies/search?query=${companyName}`;
+    return this.http.get(url);
+  }
+
+  getStockPrices(stock: string): Observable<any> {
     const url = `https://api-v2.intrinio.com/securities/${stock}/prices`
-    return this.http.get(url)
+    return this.http.get<any>(url)
       .pipe(
         map(res => {
           return res;
         })
       );
+  }
+
+  getStockPricesV2(stock: string) {
+    const url = `https://api-v2.intrinio.com/securities/${stock}/prices`
+    return this.http.get(url)
   }
 
   getStockSummary(stock: string) {
@@ -52,6 +55,20 @@ export class StocksService {
       .pipe(
         map(res => res)
       );
+  }
+
+  getDBStocks() {
+    this.stocks = this.stockCollection.snapshotChanges()
+      .pipe(
+        map(changes => {
+          return changes.map(action => {
+            const data = action.payload.doc.data() as DBStock;
+            data.id = action.payload.doc.id;
+            return data;
+          });
+        })
+      );
+    return this.stocks;
   }
 
 }
