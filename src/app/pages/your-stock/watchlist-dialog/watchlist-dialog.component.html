@@ -1,0 +1,30 @@
+<h5>Add to watchlist</h5>
+<h6>Keep track of your watchlist and watch how it performs</h6>
+<mat-form-field>
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="ticker">
+    <th mat-header-cell *matHeaderCellDef> Ticker </th>
+    <td mat-cell *matCellDef="let element"> {{element.ticker}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="exchange">
+    <th mat-header-cell *matHeaderCellDef> Exchange </th>
+    <td mat-cell *matCellDef="let element"> {{element.exchange}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selected(row.name)"></tr>
+</table>
+<button (click)="closeDialog()">Done</button>

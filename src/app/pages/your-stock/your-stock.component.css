@@ -1,0 +1,9 @@
+p {
+  text-align: center;
+  color: gray;
+}
+
+a.title {
+  color: inherit;
+  font-weight: bold;
+}

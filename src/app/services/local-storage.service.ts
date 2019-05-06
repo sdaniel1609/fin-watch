@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {SearchedCompany} from '../model/searchedCompany';
+import {Observable, Subject} from 'rxjs';
 
 
 @Injectable({
@@ -8,6 +9,11 @@ import {SearchedCompany} from '../model/searchedCompany';
 export class LocalStorageService {
   private companies: string[];
   private nextId: number;
+  private storageSubject = new Subject<boolean>();
+
+  watchStorage(): Observable<any> {
+    return this.storageSubject.asObservable();
+  }
 
   constructor() {
     const companies = this.getCompanies();
@@ -22,18 +28,24 @@ export class LocalStorageService {
 
   public addCompany(text: string): void {
 
-    const company = new SearchedCompany(this.nextId, text);
-    const companies = this.getCompanies();
-    companies.push(company);
-
-    this.setLocalStorageCompanies(companies);
-    this.nextId++;
+      const company = new SearchedCompany(this.nextId, text);
+      const companies = this.getCompanies();
+      companies.push(company);
+      this.setLocalStorageCompanies(companies);
+      this.nextId++;
+      this.storageSubject.next(true);
   }
+
 
   public getCompanies() {
     const localStorageItem = JSON.parse(localStorage.getItem('companies'));
     return localStorageItem == null ? [] : localStorageItem.companies;
   }
+/*
+  removeDuplicates() {
+    this.distinctCompanyNames = [...new Set(this.companyNames)];
+    this.setCompanies();
+  }*/
 
   private setLocalStorageCompanies(company: string[]): void {
     localStorage.setItem('companies', JSON.stringify({companies: company}));

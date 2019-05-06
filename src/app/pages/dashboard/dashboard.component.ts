@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterContentChecked, AfterViewInit, Component, OnInit} from '@angular/core';
 import {StocksService} from '../../services/stocks.service';
-import {map} from 'rxjs/operators';
+import {map, mergeMap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {forkJoin} from 'rxjs';
+import {Company} from '../../model/company';
+import {LocalStorageService} from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,81 +13,56 @@ import {forkJoin} from 'rxjs';
 })
 export class DashboardComponent implements OnInit {
 
-  hide: boolean;
+  localStorgeCompanies = [];
+  loadedCompanies: Company[] = [];
+  distinctCompanyNames = [];
+  hide = true;
   companyNames = [];
 
-  companies = [
-    {
-    companyName: null,
-    companyTicker: null,
-    stockPrice: []
-  },
-    {
-      companyName: null,
-      companyTicker: null,
-      stockPrice: []
-    },
-    {
-      companyName: null,
-      companyTicker: null,
-      stockPrice: []
-    },
-  ];
+  constructor(private stockService: StocksService, private localStorageService: LocalStorageService) { }
 
-  constructor(private stockService: StocksService) { }
-
-  fetch() {
-    for (let i = 0; i < 3; i++) {
-      this.companyNames = JSON.parse(localStorage.getItem('companies')).companies[i].name;
+  fetchLocalStorage() {
+    for (let i = 0; i < this.localStorgeCompanies[0].companies.length; i++) {
+      if (localStorage.getItem('companies') != null) {
+        this.companyNames.push(JSON.parse(localStorage.getItem('companies')).companies[i].name);
+      }
     }
+    this.removeDuplicates();
   }
 
-  fetchLocalStorageCompanies(): void  {
-    for (let i = 0; i < 3; i++) {
-      this.companies[i].companyName = JSON.parse(localStorage.getItem('companies')).companies[i].name;
-    }
-    this.getStockTicker();
-  }
 
   removeDuplicates() {
-
+    this.distinctCompanyNames = [...new Set(this.companyNames)];
+    this.setCompanies();
+    this.hide = false;
   }
 
-  getStockTicker(): void {
-    for (let i = 0; i < 3; i++) {
-    this.stockService.getStockTicker(this.companies[i].companyName)
-      .subscribe(
-        res => this.companies[i].companyTicker = res.ticker,
-        error => console.log('Error: ', error),
-        () => {
-          if (i === 2) {
-            this.getStocKPrice();
-          }
-        }
-      );
-  }
-  }
-
-  getStocKPrice(): void {
-      for (let i = 0; i < 3; i++) {
-         this.stockService.getStockPrices(this.companies[i].companyTicker)
-          .subscribe(
-            // test
-            res => {
-              this.companies[i].stockPrice = res['stock_prices'];
-            }
-          );
-    }
-  }
 
   stockValueChange(currentValue: number, historicalValue: number) {
     const difference = currentValue - historicalValue;
     return difference / historicalValue;
   }
 
+  setCompanies() {
+    for (let i = 0; i < this.distinctCompanyNames.length; i++) {
+      this.stockService.getStockTicker(this.distinctCompanyNames[i]).pipe(
+        mergeMap(company => this.stockService.getStockPrices(company.ticker)
+        ))
+        .subscribe(companyDetails => {
+          if (this.loadedCompanies.length < 3) {
+            this.loadedCompanies.push(new Company(companyDetails.security.name, companyDetails.security.ticker, companyDetails.stock_prices));
+          }
+        });
+    }
+    }
 
   ngOnInit() {
-    this.fetchLocalStorageCompanies();
+    this.localStorgeCompanies.push(JSON.parse(localStorage.getItem('companies')));
+    this.fetchLocalStorage();
+    this.localStorageService.watchStorage().subscribe( data => {
+      console.log(data);
+      this.fetchLocalStorage();
+    });
   }
 
 }

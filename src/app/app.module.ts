@@ -40,10 +40,15 @@ import { FirestoreSettingsToken } from '@angular/fire/firestore';
 import { UsersComponent } from './pages/users/users.component';
 import {AuthGuard} from './guards/auth.guard';
 import { CryptoComponent } from './pages/crypto/crypto.component';
+import { YourStockComponent } from './pages/your-stock/your-stock.component';
+import { WatchlistDialogComponent } from './pages/your-stock/watchlist-dialog/watchlist-dialog.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'your-stock', component: YourStockComponent, canActivate: [AuthGuard] },
   { path: 'forex', component: ForexComponent, canActivate: [AuthGuard] },
   { path: 'company-lookup', component: CompanyLookupComponent, canActivate: [AuthGuard] },
   { path: 'company-lookup/:id', component: CompanyLookupComponent, canActivate: [AuthGuard] },
@@ -67,8 +72,11 @@ const appRoutes: Routes = [
     LoginComponent,
     RegisterComponent,
     UsersComponent,
-    CryptoComponent
+    CryptoComponent,
+    YourStockComponent,
+    WatchlistDialogComponent
   ],
+  entryComponents: [WatchlistDialogComponent],
   imports: [
     MatPaginatorModule,
     MatTooltipModule,
@@ -93,7 +101,9 @@ const appRoutes: Routes = [
     MatButtonModule,
     AngularFireModule.initializeApp(environment.firebase, 'fin-watch'),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    MatDialogModule,
+    MatCheckboxModule
   ],
   providers: [IndicesService, AuthGuard, UserService, HttpClientModule, { provide: FirestoreSettingsToken, useValue: {}}, {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }],
   bootstrap: [AppComponent]

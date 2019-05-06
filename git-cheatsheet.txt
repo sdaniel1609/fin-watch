@@ -8,6 +8,6 @@ Create and Push branch to remote Git repository
 
 
 
-TODO
-1. Implement local storage for recently searched
-2. Implement 'Your stocks page' for stocks watchlist
+
+TODO Implement local storage for recently searched - DONE
+TODO Implement 'Your stocks page' for stocks watchlist
