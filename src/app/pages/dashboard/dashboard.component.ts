@@ -1,8 +1,6 @@
-import {AfterContentChecked, AfterViewInit, Component, OnInit} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import {StocksService} from '../../services/stocks.service';
-import {map, mergeMap} from 'rxjs/operators';
-import {Observable} from 'rxjs';
-import {forkJoin} from 'rxjs';
+import {mergeMap} from 'rxjs/operators';
 import {Company} from '../../model/company';
 import {LocalStorageService} from '../../services/local-storage.service';
 
