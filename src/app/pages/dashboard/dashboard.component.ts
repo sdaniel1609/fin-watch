@@ -44,6 +44,7 @@ export class DashboardComponent implements OnInit {
   }
 
   setCompanies() {
+    this.hide = true;
     for (let i = 0; i < this.distinctCompanyNames.length; i++) {
       this.stockService.getStockTicker(this.distinctCompanyNames[i]).pipe(
         mergeMap(company => this.stockService.getStockPrices(company.ticker)
@@ -54,6 +55,7 @@ export class DashboardComponent implements OnInit {
           }
         });
     }
+    this.hide = false;
     }
 
   ngOnInit() {
