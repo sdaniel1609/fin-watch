@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFireDatabase} from 'angularfire2/database';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 
@@ -13,21 +14,43 @@ export interface WatchList {
 })
 export class FirebaseService {
 
-  watchListCollection: AngularFirestoreCollection<WatchList>;
+  watchListCollection: AngularFirestoreCollection<any>;
   watchList: Observable <WatchList[]>;
+  recentWatchlist: Observable <WatchList[]>;
 
-  constructor(private fireStore: AngularFirestore, private afs: AngularFirestore) {
+  constructor(private fireStore: AngularFirestore, private afs: AngularFirestore, private af: AngularFireDatabase) {
     this.watchListCollection = this.afs.collection('watchlist');
   }
 
   addToWatchList(stock: string) {
-    return this.fireStore.collection('watchlist').add({
-      name: stock
+    this.fireStore.collection('watchlist').ref.where('name', '==', stock).get().then((ref) => {
+      const results = ref.docs.map(doc => doc.data() as WatchList);
+      if (results.length > 0) {
+        console.log('stock already added to watchlist');
+      } else {
+        return this.fireStore.collection('watchlist').add({
+          name: stock
+        });
+      }
     });
   }
 
-  deleteWatchList(watchListId: string){
-    this.fireStore.doc('watchlist/' + watchListId).delete();
+  getWathlistChanges() {
+    this.recentWatchlist = this.watchListCollection.stateChanges()
+      .pipe(
+        map (recentChanges => {
+          return recentChanges.map(action => {
+            const data = action.payload.doc.data() as WatchList;
+            data.id = action.payload.doc.id;
+            return data;
+          });
+        }));
+    return this.recentWatchlist;
+  }
+
+
+  deleteWatchList(watchlistItem) {
+    return this.fireStore.collection('watchlist').doc(watchlistItem).delete();
   }
 
   getWatchList() {
@@ -43,4 +66,15 @@ export class FirebaseService {
       );
     return this.watchList;
   }
+
+  getAllWatchlist() {
+    return this.watchListCollection.snapshotChanges().pipe( map(changes => {
+      return changes.map(action => {
+        const data = action.payload.doc.data();
+        data.id = action.payload.doc.id;
+        return data;
+      });
+    }));
+  }
+
 }

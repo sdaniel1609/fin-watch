@@ -44,6 +44,7 @@ import { YourStockComponent } from './pages/your-stock/your-stock.component';
 import { WatchlistDialogComponent } from './pages/your-stock/watchlist-dialog/watchlist-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -105,7 +106,7 @@ const appRoutes: Routes = [
     MatDialogModule,
     MatCheckboxModule
   ],
-  providers: [IndicesService, AuthGuard, UserService, HttpClientModule, { provide: FirestoreSettingsToken, useValue: {}}, {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }],
+  providers: [AngularFireDatabase, IndicesService, AuthGuard, UserService, HttpClientModule, { provide: FirestoreSettingsToken, useValue: {}}, {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

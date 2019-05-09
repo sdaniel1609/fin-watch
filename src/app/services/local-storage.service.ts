@@ -41,11 +41,7 @@ export class LocalStorageService {
     const localStorageItem = JSON.parse(localStorage.getItem('companies'));
     return localStorageItem == null ? [] : localStorageItem.companies;
   }
-/*
-  removeDuplicates() {
-    this.distinctCompanyNames = [...new Set(this.companyNames)];
-    this.setCompanies();
-  }*/
+
 
   private setLocalStorageCompanies(company: string[]): void {
     localStorage.setItem('companies', JSON.stringify({companies: company}));

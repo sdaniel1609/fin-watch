@@ -5,7 +5,10 @@ import {DBStock} from '../../../model/DBStock';
 import {StocksService} from '../../../services/stocks.service';
 import {DataService} from '../../../services/data.service';
 import {FirebaseService} from '../../../services/firebase.service';
-
+export interface WatchList {
+  id?: string;
+  name: string;
+}
 @Component({
   selector: 'app-watchlist-dialog',
   templateUrl: './watchlist-dialog.component.html',
@@ -23,7 +26,7 @@ export class WatchlistDialogComponent implements OnInit {
   }
 
   constructor(public dialogRef: MatDialogRef<YourStockComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: string,
+              @Inject(MAT_DIALOG_DATA) public data: WatchList[],
               private stockService: StocksService,
               private dataService: DataService,
               private fireBaseService: FirebaseService) { }
@@ -33,7 +36,17 @@ export class WatchlistDialogComponent implements OnInit {
   }
 
   selected(name) {
-    this.fireBaseService.addToWatchList(name);
+    const exists = this.data.some(el => el.name === name);
+    if (!exists) {
+      this.fireBaseService.addToWatchList(name);
+    } else {
+      console.log('stock already exists in watchlist');
+    }
+ /*   if (this.data.includes(name)) {
+      console.log('stock already exists in watchlist');
+    } else {
+      this.fireBaseService.addToWatchList(name);
+    }*/
   }
 
   getDBStocks() {
