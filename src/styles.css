@@ -1,0 +1,16 @@
+
+body {
+  margin: 0;
+}
+
+/* Used by indices and securities tables for positive (green) or negative (red) value change*/
+.green {
+  color: green;
+}
+.red {
+  color: red;
+}
+
+table {
+  font-size: 12px;
+}

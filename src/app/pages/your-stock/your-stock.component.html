@@ -5,7 +5,7 @@
         <a class="card-link title">Your Watchlist</a>
         <a (click)="openDialog()" class="card-link watchlist">Add To Watchlist</a>
       </div>
-      <div class="card" *ngIf="!companies">
+      <div class="card" *ngIf="companies.length == 0">
         <div class="card-body">
           <p class="card-text p-5 text-center ">Your watchlist is empty. Add your favourite stocks for quick access and to stay up to date with the latest financial news.</p>
         </div>

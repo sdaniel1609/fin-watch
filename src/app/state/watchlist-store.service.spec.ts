@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DataService } from './data.service';
+import { WatchlistStore } from './watchlist-store.service';
 
-describe('DataService', () => {
+describe('WatchlistStoreService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: DataService = TestBed.get(DataService);
+    const service: WatchlistStore = TestBed.get(WatchlistStore);
     expect(service).toBeTruthy();
   });
 });
