@@ -3,7 +3,7 @@
     <div class="col-12">
       <div class="header d-flex justify-content-between pt-4 pb-4">
         <a class="card-link title">Your Watchlist</a>
-        <a (click)="openDialog()" class="card-link watchlist">Add To Watchlist</a>
+        <a (click)="openDialog()" class="card-link watchlist">Add To Watchlist <i class="fas fa-plus-circle"></i></a>
       </div>
       <mat-progress-bar
         *ngIf="companies.length == 0"
@@ -27,7 +27,7 @@
           <td>{{company.ticker}}</td>
           <td>{{company.stock_prices[0]?.close}}</td>
           <td [ngClass]="((company.stock_prices[0]?.close - company.stock_prices[30]?.close)> 0)?'green':'red'">{{company.stock_prices[0]?.close - company.stock_prices[30]?.close | number: '1.0'}} ({{stockValueChange(company.stock_prices[0]?.close, company.stock_prices[30]?.close) | percent: '1.2'}})</td>
-          <td><button (click)="deleteWatchListItem(company.name)">Delete</button></td>
+          <td><i (click)="deleteWatchListItem(company.name)" class="fas fa-trash-alt"></i></td>
         </tr>
         </tbody>
       </table>

@@ -10,9 +10,14 @@
   </div>
 </div>
 -->
-
+<div class="custom-container">
       <h5>Forex</h5>
       <table class="table table-bordered">
+        <tr>
+          <th>Currency Pair</th>
+          <th>Price</th>
+          <th>Date</th>
+        </tr>
         <tbody>
         <tr *ngFor="let currency of currencyPairs">
           <td>{{currency.currencyPair}}</td>
@@ -22,3 +27,4 @@
         </tbody>
       </table>
 
+</div>

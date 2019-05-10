@@ -11,3 +11,6 @@ table {
   font-size: 14px;
   width: 100%;
 }
+.mat-row:hover {
+  background-color: #a53cf6;
+}

@@ -7,3 +7,11 @@ a.title {
   color: inherit;
   font-weight: bold;
 }
+
+.card-link:hover {
+  cursor: pointer;
+}
+
+.fa-trash-alt:hover {
+  cursor: pointer;
+}

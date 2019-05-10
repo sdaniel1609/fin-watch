@@ -5,6 +5,8 @@ import {DBStock} from '../../../model/DBStock';
 import {StocksService} from '../../../services/stocks.service';
 import {DataService} from '../../../services/data.service';
 import {FirebaseService} from '../../../services/firebase.service';
+import Swal from 'sweetalert2';
+
 export interface WatchList {
   id?: string;
   name: string;
@@ -39,9 +41,19 @@ export class WatchlistDialogComponent implements OnInit {
     const exists = this.data.some(el => el.name === name);
     if (!exists) {
       this.fireBaseService.addToWatchList(name);
+      Swal.fire({
+        type: 'success',
+        title: `${name} added to watchlist`,
+      });
     } else {
+      Swal.fire({
+        type: 'info',
+        title: 'Stock already in watchlist',
+      });
       console.log('stock already exists in watchlist');
     }
+
+
  /*   if (this.data.includes(name)) {
       console.log('stock already exists in watchlist');
     } else {
