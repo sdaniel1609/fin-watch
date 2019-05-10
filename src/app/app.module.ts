@@ -46,6 +46,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { AngularFireDatabase } from 'angularfire2/database';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { RecentlySearchedComponent } from './pages/recently-searched/recently-searched.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -76,7 +78,8 @@ const appRoutes: Routes = [
     UsersComponent,
     CryptoComponent,
     YourStockComponent,
-    WatchlistDialogComponent
+    WatchlistDialogComponent,
+    RecentlySearchedComponent
   ],
   entryComponents: [WatchlistDialogComponent],
   imports: [
@@ -106,7 +109,8 @@ const appRoutes: Routes = [
     AngularFireAuthModule,
     MatDialogModule,
     MatCheckboxModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    NgxSpinnerModule
   ],
   providers: [AngularFireDatabase, IndicesService, AuthGuard, UserService, HttpClientModule, { provide: FirestoreSettingsToken, useValue: {}}, {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }],
   bootstrap: [AppComponent]
