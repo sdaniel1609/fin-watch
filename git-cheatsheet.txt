@@ -12,4 +12,3 @@ Create and Push branch to remote Git repository
 TODO Implement local storage for recently searched - DONE
 TODO Implement 'Your stocks page' for stocks watchlist - DONE
 TODO - add delete from watchlist functionality - DONE
-
