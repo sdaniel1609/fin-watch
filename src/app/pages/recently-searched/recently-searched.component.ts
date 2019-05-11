@@ -22,7 +22,10 @@ export class RecentlySearchedComponent implements OnInit {
   fetchLocalStorage() {
     for (let i = 0; i < this.localStorgeCompanies[0].companies.length; i++) {
       if (localStorage.getItem('companies') != null) {
+        this.hide = false;
         this.companyNames.push(JSON.parse(localStorage.getItem('companies')).companies[i].name);
+      } else {
+        this.hide = true;
       }
     }
     this.removeDuplicates();
@@ -42,7 +45,6 @@ export class RecentlySearchedComponent implements OnInit {
   }
 
   setCompanies() {
-    this.hide = true;
     for (let i = 0; i < this.distinctCompanyNames.length; i++) {
       this.stockService.getStockTicker(this.distinctCompanyNames[i]).pipe(
         mergeMap(company => this.stockService.getStockPrices(company.ticker)
@@ -53,7 +55,6 @@ export class RecentlySearchedComponent implements OnInit {
           }
         });
     }
-    this.hide = false;
   }
 
   ngOnInit() {
