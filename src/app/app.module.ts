@@ -15,7 +15,6 @@ import {MatTableModule} from '@angular/material/table';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { MatPaginatorModule, MatSortModule } from '@angular/material';
-import { DataTableComponent } from './pages/data-table/data-table.component';
 import {DashboardComponent} from './pages/dashboard/dashboard.component';
 import {NewsTableComponent} from './pages/news-table/news-table.component';
 import {MatCardModule} from '@angular/material/card';
@@ -68,7 +67,6 @@ const appRoutes: Routes = [
     NavigationComponent,
     IndicesComponent,
     DashboardComponent,
-    DataTableComponent,
     NewsTableComponent,
     ForexComponent,
     CompanyLookupComponent,

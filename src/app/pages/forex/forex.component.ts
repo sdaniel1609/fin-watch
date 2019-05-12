@@ -10,6 +10,7 @@ import {map} from 'rxjs/operators';
 })
 export class ForexComponent implements OnInit {
   showSpinner = true;
+  // TODO: Rewrite using forex class
   currencyPairs = [
     {
     currencyPair: 'GBPUSD',
@@ -29,7 +30,7 @@ export class ForexComponent implements OnInit {
     },
   ];
 
-  constructor(private forexService: ForexService) { }
+  constructor(public forexService: ForexService) { }
 
   getCurrencyPrice() {
     for (let i = 0; i < this.currencyPairs.length; i++ ) {
