@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Company} from '../../model/company';
 import {StocksService} from '../../services/stocks.service';
-import {mergeMap} from 'rxjs/operators';
+import {concatMap, mergeMap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-recently-searched',
@@ -10,7 +10,7 @@ import {mergeMap} from 'rxjs/operators';
 })
 export class RecentlySearchedComponent implements OnInit {
 
-  localStorgeCompanies = [];
+  localStorageCompanies = [];
   loadedCompanies: Company[] = [];
   distinctCompanyNames = [];
   companyNames = [];
@@ -19,14 +19,13 @@ export class RecentlySearchedComponent implements OnInit {
   constructor(private stockService: StocksService) { }
 
   fetchLocalStorage() {
-    for (let i = 0; i < this.localStorgeCompanies[0].companies.length; i++) {
-      if (localStorage.getItem('companies') != null) {
-        this.companyNames.push(JSON.parse(localStorage.getItem('companies')).companies[i].name);
-      } else {
-      }
-    }
+    this.localStorageCompanies = (JSON.parse(localStorage.getItem('companies')).companies);
+    this.localStorageCompanies.forEach((el) => {
+      this.companyNames.push(el.name);
+    });
     this.removeDuplicates();
   }
+
 
   removeDuplicates() {
     this.distinctCompanyNames = [...new Set(this.companyNames)];
@@ -55,9 +54,8 @@ export class RecentlySearchedComponent implements OnInit {
   }
 
   ngOnInit() {
-   this.localStorgeCompanies.push(JSON.parse(localStorage.getItem('companies')));
+   this.localStorageCompanies.push(JSON.parse(localStorage.getItem('companies')));
     this.fetchLocalStorage();
-
   }
 
 }
