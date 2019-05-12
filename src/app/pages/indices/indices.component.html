@@ -6,7 +6,14 @@
     <mat-option *ngFor="let period of periods" [value]="period">{{period}}</mat-option>
   </mat-select>
 </mat-form-field>-->
-<table class="table  table-bordered">
+<mat-progress-bar
+  *ngIf="showSpinner"
+  color='primary'
+  mode='query'
+  [value]=50
+  [bufferValue]=75>
+</mat-progress-bar>
+<table *ngIf="!showSpinner" class="table  table-bordered">
   <tbody>
   <tr *ngFor="let index of trackedIndices">
     <td>{{index.name}}</td>

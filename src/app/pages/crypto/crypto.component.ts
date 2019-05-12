@@ -9,6 +9,7 @@ import {CryptoService} from '../../services/crypto.service';
 })
 export class CryptoComponent implements OnInit {
 
+  showSpinner = true;
   cryptoPairs = [
     {
       cryptoPair: 'btcusd',
@@ -32,7 +33,12 @@ export class CryptoComponent implements OnInit {
   getCryptoPrices() {
     for (let i = 0; i < this.cryptoPairs.length; i++) {
       this.cryptoService.getCryptoPrice(this.cryptoPairs[i].cryptoPair, this.cryptoPairs[i].exchange)
-        .subscribe( res => this.cryptoPairs[i].cryptoPrice =  res[0]);
+        .subscribe( res => {
+          this.cryptoPairs[i].cryptoPrice =  res[0];
+          if (i === this.cryptoPairs.length - 1 ) {
+            this.showSpinner = false;
+          }
+        });
     }
   }
 

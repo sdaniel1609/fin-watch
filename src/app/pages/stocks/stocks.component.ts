@@ -30,6 +30,9 @@ export class StocksComponent implements OnInit {
       stock_prices: [],
     },
   ]
+
+  showSpinner = true;
+
   constructor(private stocksService: StocksService) { }
 
   stockValueChange(currentValue: number, historicalValue: number) {
@@ -43,6 +46,9 @@ export class StocksComponent implements OnInit {
         .subscribe(res => {
           this.stocks[i].stock_prices = res['stock_prices'];
           this.stocks[i].name = res['security'].name;
+          if (i === this.stocks.length - 1) {
+            this.showSpinner = false;
+          }
         });
     }
   }

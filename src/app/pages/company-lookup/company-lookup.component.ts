@@ -82,9 +82,6 @@ export class CompanyLookupComponent implements OnInit {
   }
 
   loadChart(): void {
-    console.log('Loading Chart...')
-    console.log(this.closePrice)
-    console.log(this.closeDate)
     this.chart = new Chart('canvas', {
       type: 'line',
       data: {
