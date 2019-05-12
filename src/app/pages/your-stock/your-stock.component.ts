@@ -14,7 +14,7 @@ export interface WatchList {
 @Component({
   selector: 'app-your-stock',
   templateUrl: './your-stock.component.html',
-  styleUrls: ['./your-stock.component.css']
+  styleUrls: ['./your-stock.component.scss']
 })
 export class YourStockComponent implements OnInit {
   watchList = [];
