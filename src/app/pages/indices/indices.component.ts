@@ -16,6 +16,7 @@ export class IndicesComponent implements OnInit {
 
   showSpinner = true;
 
+  // TODO: Rewrite using indices class
   trackedIndices = [
     {
       symbol: 'DJI',

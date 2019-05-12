@@ -16,7 +16,6 @@ export class NewsTableComponent implements OnInit {
 
   news: News[];
   dataSource: NewsDataSource;
-  displayedColumns = ['publicationDate', 'company', 'title'];
 
   constructor(private newsService: NewsService) { }
 

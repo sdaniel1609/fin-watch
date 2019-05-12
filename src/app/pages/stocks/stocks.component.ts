@@ -8,6 +8,7 @@ import {StocksService} from '../../services/stocks.service';
 })
 export class StocksComponent implements OnInit {
 
+  // TODO: Rewrite using stocks class
   stocks = [
     {
       security: 'AAPL',

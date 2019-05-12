@@ -10,6 +10,8 @@ import {CryptoService} from '../../services/crypto.service';
 export class CryptoComponent implements OnInit {
 
   showSpinner = true;
+
+  // TODO: Rewrite using crypto class
   cryptoPairs = [
     {
       cryptoPair: 'btcusd',
