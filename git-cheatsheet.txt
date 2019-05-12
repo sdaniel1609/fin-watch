@@ -5,10 +5,6 @@ Create and Push branch to remote Git repository
 2 - Push your branch to the remote repository:
     git push -u origin feature_branch_name
 
-
-
-
-
 TODO Implement local storage for recently searched - DONE
 TODO Implement 'Your stocks page' for stocks watchlist - DONE
 TODO - add delete from watchlist functionality - DONE
