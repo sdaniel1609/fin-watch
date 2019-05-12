@@ -123,5 +123,10 @@
       }
     }
   },
-  "defaultProject": "fin-watch"
+  "defaultProject": "fin-watch",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

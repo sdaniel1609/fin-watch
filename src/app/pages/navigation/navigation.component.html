@@ -1,5 +1,4 @@
-
-<div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
+<div class="toolbar-container" [class.toolbar-is-mobile]="mobileQuery.matches">
   <mat-toolbar *ngIf="isLoggedIn" color="primary" class="example-toolbar">
     <button mat-icon-button class="nav-btn" (click)="snav.toggle()"> <i class="fas fa-bars"></i></button>
     <span class="spacer"></span>
@@ -17,9 +16,7 @@
       </span>
     </div>
   </mat-toolbar>
-
-  <mat-sidenav-container class="example-sidenav-container"
-                         [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+  <mat-sidenav-container class="example-sidenav-container">
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
                  [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
       <mat-nav-list>

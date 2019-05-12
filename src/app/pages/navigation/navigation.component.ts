@@ -9,7 +9,7 @@ import {User} from '../../model/User';
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.css'],
+  styleUrls: ['./navigation.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class NavigationComponent implements OnDestroy, OnInit {
