@@ -14,6 +14,8 @@ export interface HistoricalIndex {
 
 export class IndicesComponent implements OnInit {
 
+  showSpinner = true;
+
   trackedIndices = [
     {
       symbol: 'DJI',
@@ -63,13 +65,17 @@ export class IndicesComponent implements OnInit {
   getIndexHistoricalValue(): void {
     for (let i = 0; i < this.trackedIndices.length; i++) {
       this.indicesService.getIndexHistoricalValue(this.trackedIndices[i].symbol)
-        .subscribe(indexHistoric => this.trackedIndices[i].historicalData = indexHistoric);
+        .subscribe(indexHistoric => {
+          this.trackedIndices[i].historicalData = indexHistoric;
+          if (i === this.trackedIndices.length - 1) {
+            this.showSpinner = false;
+          }
+        });
     }
   }
 
   ngOnInit() {
   this.getIndexValue();
   this.getIndexHistoricalValue();
-
   }
 }

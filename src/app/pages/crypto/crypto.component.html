@@ -1,6 +1,13 @@
 <div class="custom-container">
 <h5>Crypto Currency</h5>
-<table class="table table-bordered">
+  <mat-progress-bar
+    *ngIf="showSpinner"
+    color='primary'
+    mode='query'
+    [value]=50
+    [bufferValue]=75>
+  </mat-progress-bar>
+<table  *ngIf="!showSpinner" class="table table-bordered">
   <tr>
     <th>Crypto Pair</th>
     <th>Exchange</th>

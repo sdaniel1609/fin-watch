@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Company} from '../../model/company';
 import {StocksService} from '../../services/stocks.service';
-import {LocalStorageService} from '../../services/local-storage.service';
 import {mergeMap} from 'rxjs/operators';
 
 @Component({
@@ -14,28 +13,25 @@ export class RecentlySearchedComponent implements OnInit {
   localStorgeCompanies = [];
   loadedCompanies: Company[] = [];
   distinctCompanyNames = [];
-  hide = true;
   companyNames = [];
+  showSpinner = true;
 
-  constructor(private stockService: StocksService, private localStorageService: LocalStorageService) { }
+  constructor(private stockService: StocksService) { }
 
   fetchLocalStorage() {
     for (let i = 0; i < this.localStorgeCompanies[0].companies.length; i++) {
       if (localStorage.getItem('companies') != null) {
-        this.hide = false;
         this.companyNames.push(JSON.parse(localStorage.getItem('companies')).companies[i].name);
       } else {
-        this.hide = true;
       }
     }
     this.removeDuplicates();
   }
 
-
   removeDuplicates() {
     this.distinctCompanyNames = [...new Set(this.companyNames)];
     this.setCompanies();
-    this.hide = false;
+
   }
 
 
@@ -52,6 +48,7 @@ export class RecentlySearchedComponent implements OnInit {
         .subscribe(companyDetails => {
           if (this.loadedCompanies.length < 3) {
             this.loadedCompanies.push(new Company(companyDetails.security.name, companyDetails.security.ticker, companyDetails.stock_prices));
+          this.showSpinner = false;
           }
         });
     }

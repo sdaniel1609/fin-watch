@@ -9,6 +9,7 @@ import {map} from 'rxjs/operators';
   styleUrls: ['./forex.component.css']
 })
 export class ForexComponent implements OnInit {
+  showSpinner = true;
   currencyPairs = [
     {
     currencyPair: 'GBPUSD',
@@ -33,7 +34,12 @@ export class ForexComponent implements OnInit {
   getCurrencyPrice() {
     for (let i = 0; i < this.currencyPairs.length; i++ ) {
       this.forexService.getCurrencyPrice(this.currencyPairs[i].currencyPair)
-        .subscribe(res => this.currencyPairs[i].currencyPairPrice = res );
+        .subscribe(res => {
+          this.currencyPairs[i].currencyPairPrice = res;
+          if (i === this.currencyPairs.length -1 ) {
+            this.showSpinner = false;
+          }
+        });
     }
   }
   ngOnInit() {

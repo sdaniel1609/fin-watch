@@ -1,8 +1,15 @@
-<div class="container" *ngIf="!hide">
+<div class="container">
   <div class="row">
     <div class="col-12">
       <h5>Recently Searched</h5>
-      <table class="table table-bordered">
+      <mat-progress-bar
+        *ngIf="showSpinner"
+        color='primary'
+        mode='query'
+        [value]=50
+        [bufferValue]=75>
+      </mat-progress-bar>
+      <table *ngIf="!showSpinner" class="table table-bordered">
         <tbody>
         <tr *ngFor="let company of loadedCompanies">
           <td> <a routerLink="/company-lookup/{{company.name}}">{{company.name | uppercase}}</a></td>
