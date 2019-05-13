@@ -8,4 +8,18 @@ Create and Push branch to remote Git repository
 TODO Implement local storage for recently searched - DONE
 TODO Implement 'Your stocks page' for stocks watchlist - DONE
 TODO - add delete from watchlist functionality - DONE
+
+Git branching guide
 https://nvie.com/posts/a-successful-git-branching-model/
+
+
+Sync branches:
+
+$ git fetch
+$ git checkout master
+$ git pull origin develop       # pull develop into master
+$ git push origin master        # update remote/master
+
+$ git checkout develop
+$ git pull origin master        # pull master into develop
+$ git push origin develop       # update remote/develop
