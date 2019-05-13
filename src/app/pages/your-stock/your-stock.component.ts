@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {WatchlistDialogComponent} from './watchlist-dialog/watchlist-dialog.component';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatTableDataSource} from '@angular/material';
 import {Company} from '../../model/company';
 import {StocksService} from '../../services/stocks.service';
 import {DataService} from '../../services/data.service';
@@ -19,6 +19,9 @@ export interface WatchList {
 export class YourStockComponent implements OnInit {
   watchList = [];
   companies: Company[] = [];
+
+  displayedColumns: string[] = ['companyName', 'ticker', 'stockPrice', 'stockPriceChange'];
+  dataSource = new MatTableDataSource<Company>();
 
   constructor(public dialog: MatDialog, private stockService: StocksService,
               private dataService: DataService,
@@ -45,7 +48,8 @@ export class YourStockComponent implements OnInit {
         mergeMap(company => this.stockService.getStockPrices(company.ticker)
         ))
         .subscribe(companyDetails => {
-            this.companies.push(new Company(this.watchList[i].name, companyDetails.security.ticker, companyDetails.stock_prices));
+            this.companies.push(new Company(this.watchList[i].name, companyDetails.security.ticker, companyDetails.stock_prices[0].close, companyDetails.stock_prices));
+          this.dataSource.data = this.companies as Company [];
         });
     }
   }

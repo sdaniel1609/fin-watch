@@ -1,0 +1,8 @@
+table {
+  width: 100%;
+}
+table tr:hover {
+  background-color: #d5d5d5;
+}
+
+/*# sourceMappingURL=recently-searched.component.css.map */
