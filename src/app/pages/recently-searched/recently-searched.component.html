@@ -9,16 +9,43 @@
         [value]=50
         [bufferValue]=75>
       </mat-progress-bar>
-      <table *ngIf="!showSpinner" class="table table-bordered">
-        <tbody>
-        <tr *ngFor="let company of loadedCompanies">
-          <td> <a routerLink="/company-lookup/{{company.name}}">{{company.name | uppercase}}</a></td>
-          <td>{{company.ticker}}</td>
-          <td>{{company.stock_prices[0]?.close}}</td>
-          <td [ngClass]="((company.stock_prices[0]?.close - company.stock_prices[30]?.close)> 0)?'green':'red'">{{company.stock_prices[0]?.close - company.stock_prices[30]?.close | number: '1.0'}} ({{stockValueChange(company.stock_prices[0]?.close, company.stock_prices[30]?.close) | percent: '1.2'}})</td>
-        </tr>
-        </tbody>
+
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z2">
+
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="companyName">
+          <th mat-header-cell *matHeaderCellDef> Company Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="ticker">
+          <th mat-header-cell *matHeaderCellDef> Company Ticker </th>
+          <td mat-cell *matCellDef="let element"> {{element.ticker}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="stockPrice">
+          <th mat-header-cell *matHeaderCellDef> Current Stock Price </th>
+          <td mat-cell *matCellDef="let element"> {{element.currentStockPrice}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="stockPriceChange">
+          <th mat-header-cell *matHeaderCellDef> Stock Price Change </th>
+          <td mat-cell *matCellDef="let element" [ngClass]="(element.getStockPriceChange(30) > 0)?'green':'red'" > {{element.getStockPriceChange(30) | percent:'1.2'}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
+
     </div>
   </div>
 </div>
+
+
+

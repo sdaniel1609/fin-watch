@@ -53,12 +53,6 @@ export class WatchlistDialogComponent implements OnInit {
       console.log('stock already exists in watchlist');
     }
 
-
- /*   if (this.data.includes(name)) {
-      console.log('stock already exists in watchlist');
-    } else {
-      this.fireBaseService.addToWatchList(name);
-    }*/
   }
 
   getDBStocks() {
