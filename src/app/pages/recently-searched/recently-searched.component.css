@@ -1,8 +1,8 @@
 table {
   width: 100%;
 }
-table tr:hover {
-  background-color: #d5d5d5;
+table button {
+  border: none;
 }
 
 /*# sourceMappingURL=recently-searched.component.css.map */

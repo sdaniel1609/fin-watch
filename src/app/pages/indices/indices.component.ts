@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {IndicesService} from '../../services/indices.service';
+import {Company} from '../../model/company';
+import {MatTableDataSource} from '@angular/material';
+import {mergeMap} from 'rxjs/operators';
+import {forkJoin} from 'rxjs';
+import {Index} from '../../model';
 
 export interface HistoricalIndex {
   date: Date;
@@ -14,7 +19,27 @@ export interface HistoricalIndex {
 
 export class IndicesComponent implements OnInit {
 
+  indices: Index[] = [];
+  displayedColumns: string[] = ['index', 'ticker', 'indexValue', 'priceChange'];
+  dataSource = new MatTableDataSource<Company>();
+
+
   showSpinner = true;
+
+  trackedIndicesRR = [
+    {
+      symbol: 'DJI',
+      name: 'Dow Jones Industrial Average',
+    },
+    {
+      symbol: 'SPX',
+      name: 'S&P 500',
+    },
+    {
+      symbol: 'NDX',
+      name: 'NASDAQ 100 Index',
+      }
+  ];
 
   // TODO: Rewrite using indices class
   trackedIndices = [
@@ -63,7 +88,7 @@ export class IndicesComponent implements OnInit {
     }
   }
 
-  getIndexHistoricalValue(): void {
+  getHistoricalValues(): void {
     for (let i = 0; i < this.trackedIndices.length; i++) {
       this.indicesService.getIndexHistoricalValue(this.trackedIndices[i].symbol)
         .subscribe(indexHistoric => {
@@ -75,8 +100,26 @@ export class IndicesComponent implements OnInit {
     }
   }
 
+  getIndices(): void {
+   this.trackedIndicesRR.forEach((el) => {
+     const indexValue = this.indicesService.getIndexValueRR(el.symbol);
+     const indexHistoricalValue = this.indicesService.getIndexHistoricalValueRR(el.symbol);
+
+     forkJoin([indexValue, indexHistoricalValue]).subscribe(results => {
+       const value = results[0];
+       const historical_value = results[1]['historical_data'];
+        this.indices.push(new Company(el.name, el.symbol, value, historical_value));
+        console.log(this.indices);
+
+     });
+   });
+  }
+
+
+
   ngOnInit() {
   this.getIndexValue();
-  this.getIndexHistoricalValue();
+  this.getHistoricalValues();
+  this.getIndices();
   }
 }

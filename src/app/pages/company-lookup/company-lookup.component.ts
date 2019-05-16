@@ -26,7 +26,6 @@ export class CompanyLookupComponent implements OnInit {
               private newsService: NewsService,
               private route: ActivatedRoute) { }
 
-
   getStockTicker(): void {
       this.stocksService.getStockTicker(this.companyName)
         .subscribe(

@@ -20,7 +20,7 @@ export class YourStockComponent implements OnInit {
   watchList = [];
   companies: Company[] = [];
 
-  displayedColumns: string[] = ['companyName', 'ticker', 'stockPrice', 'stockPriceChange'];
+  displayedColumns: string[] = ['companyName', 'ticker', 'stockPrice', 'stockPriceChange', 'action'];
   dataSource = new MatTableDataSource<Company>();
 
   constructor(public dialog: MatDialog, private stockService: StocksService,
