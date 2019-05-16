@@ -17,6 +17,7 @@ export class FirebaseService {
   watchListCollection: AngularFirestoreCollection<any>;
   watchList: Observable <WatchList[]>;
   recentWatchlist: Observable <WatchList[]>;
+  stockAdded: boolean;
 
   constructor(private fireStore: AngularFirestore, private afs: AngularFirestore, private af: AngularFireDatabase) {
     this.watchListCollection = this.afs.collection('watchlist');
@@ -27,25 +28,15 @@ export class FirebaseService {
       const results = ref.docs.map(doc => doc.data() as WatchList);
       if (results.length > 0) {
         console.log('stock already added to watchlist');
+        this.stockAdded = false;
       } else {
+        this.stockAdded = true;
         return this.fireStore.collection('watchlist').add({
           name: stock
         });
       }
     });
-  }
-
-  getWathlistChanges() {
-    this.recentWatchlist = this.watchListCollection.stateChanges()
-      .pipe(
-        map (recentChanges => {
-          return recentChanges.map(action => {
-            const data = action.payload.doc.data() as WatchList;
-            data.id = action.payload.doc.id;
-            return data;
-          });
-        }));
-    return this.recentWatchlist;
+    return this.stockAdded;
   }
 
 

@@ -3,18 +3,11 @@ import {Company} from '../../model/company';
 import {StocksService} from '../../services/stocks.service';
 import {mergeMap} from 'rxjs/operators';
 import {MatTableDataSource} from '@angular/material';
-import {DBStock} from '../../model/DBStock';
+import Swal from 'sweetalert2';
+import {DataService} from '../../services/data.service';
+import {FirebaseService} from '../../services/firebase.service';
+import {WatchList} from '../your-stock/your-stock.component';
 
-export interface PeriodicElement {
-  companyName: string;
-  ticker: string;
-  stockPrice: number;
-  stockPriceChange: number;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {companyName: 'ff', ticker: 'Hydrogen', stockPrice: 1.0079, stockPriceChange: 22},
-];
 
 @Component({
   selector: 'app-recently-searched',
@@ -28,11 +21,14 @@ export class RecentlySearchedComponent implements OnInit {
   distinctCompanyNames = [];
   companyNames = [];
   showSpinner = true;
+  watchListStocks: WatchList[] = [];
+  added: boolean;
 
-  displayedColumns: string[] = ['companyName', 'ticker', 'stockPrice', 'stockPriceChange'];
+  displayedColumns: string[] = ['companyName', 'ticker', 'stockPrice', 'stockPriceChange', 'action'];
   dataSource = new MatTableDataSource<Company>();
 
-  constructor(private stockService: StocksService) { }
+  constructor(private stockService: StocksService, private dataService: DataService,
+              private fireBaseService: FirebaseService) { }
 
   fetchLocalStorage() {
     this.localStorageCompanies = (JSON.parse(localStorage.getItem('companies')).companies);
@@ -42,16 +38,26 @@ export class RecentlySearchedComponent implements OnInit {
     this.removeDuplicates();
   }
 
-
   removeDuplicates() {
     this.distinctCompanyNames = [...new Set(this.companyNames)];
     this.setCompanies();
   }
 
-
-  stockValueChange(currentValue: number, historicalValue: number) {
-    const difference = currentValue - historicalValue;
-    return difference / historicalValue;
+  add(name: string) {
+      this.added = this.fireBaseService.addToWatchList(name);
+      if (this.added === true) {
+        Swal.fire({
+          type: 'success',
+          title: `Successfully added ${name} to watchlist`,
+          timer: 2000,
+        });
+      } else  {
+        Swal.fire({
+          type: 'info',
+          title: `${name} already added to watchlist`,
+          timer: 2000,
+        });
+      }
   }
 
   setCompanies() {
@@ -60,10 +66,8 @@ export class RecentlySearchedComponent implements OnInit {
           mergeMap(company => this.stockService.getStockPrices(company.ticker)
           )).subscribe( companyDetails => {
           if (this.loadedCompanies.length < 3) {
-            console.log(companyDetails);
             this.loadedCompanies.push(new Company(companyDetails.security.name, companyDetails.security.ticker, companyDetails.stock_prices[0].close, companyDetails.stock_prices));
             this.showSpinner = false;
-            console.log(this.loadedCompanies);
             this.dataSource.data = this.loadedCompanies as Company [];
           }
         });
@@ -74,6 +78,8 @@ export class RecentlySearchedComponent implements OnInit {
   ngOnInit() {
    this.localStorageCompanies.push(JSON.parse(localStorage.getItem('companies')));
     this.fetchLocalStorage();
+
+
   }
 
 }

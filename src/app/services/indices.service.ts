@@ -19,6 +19,16 @@ export class IndicesService {
         catchError(this.handleError));
   }
 
+  getIndexValueRR(index: string) {
+    const url = `${this.url}${index}/data_point/level/number`;
+    return this.http.get<number>(url);
+  }
+
+  getIndexHistoricalValueRR(index: string) {
+    const url = `${this.url}${index}/historical_data/level`;
+    return this.http.get(url);
+  }
+
   getIndexHistoricalValue(index: string) {
     const url = `${this.url}${index}/historical_data/level`;
     return this.http.get(url)
