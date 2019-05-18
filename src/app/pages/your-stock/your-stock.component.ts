@@ -6,6 +6,7 @@ import {StocksService} from '../../services/stocks.service';
 import {DataService} from '../../services/data.service';
 import {mergeMap} from 'rxjs/operators';
 import {FirebaseService} from '../../services/firebase.service';
+import {WatchlistStore} from '../../state/watchlist-store.service';
 export interface WatchList {
   id?: string;
   name: string;
@@ -18,6 +19,8 @@ export interface WatchList {
 })
 export class YourStockComponent implements OnInit {
   watchList = [];
+  watchListRR = [];
+
   companies: Company[] = [];
 
   displayedColumns: string[] = ['companyName', 'ticker', 'stockPrice', 'stockPriceChange', 'action'];
@@ -25,7 +28,8 @@ export class YourStockComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private stockService: StocksService,
               private dataService: DataService,
-              private firebaseService: FirebaseService) { }
+              private firebaseService: FirebaseService,
+              private watchlistStore: WatchlistStore) { }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(WatchlistDialogComponent, {
@@ -33,11 +37,6 @@ export class YourStockComponent implements OnInit {
       data: this.watchList
     });
 
-  }
-
-  stockValueChange(currentValue: number, historicalValue: number) {
-    const difference = currentValue - historicalValue;
-    return difference / historicalValue;
   }
 
 
@@ -72,7 +71,15 @@ export class YourStockComponent implements OnInit {
 
   ngOnInit() {
     this.getDBWatchlist();
+    this.watchlistStore.getWatchlist().subscribe( watchlist => {
+      this.watchListRR = watchlist.map( e => {
+        return {
+          id: e.payload.doc.id,
+          ...e.payload.doc.data()
+        } as WatchList;
+      });
+    });
+
+    console.log(this.watchListRR);
+    }
   }
-
-
-}
