@@ -21,6 +21,7 @@ export class CompanyLookupComponent implements OnInit {
   stockPriceInfo: IStockPrice;
   news = [];
   chart: Chart;
+  loadedTicker = 0;
 
   constructor(private stocksService: StocksService,
               private newsService: NewsService,
@@ -29,12 +30,22 @@ export class CompanyLookupComponent implements OnInit {
   getStockTicker(): void {
       this.stocksService.getStockTicker(this.companyName)
         .subscribe(
-          (res => {this.company = res; }),
+          (res => {
+            if (res === undefined) {
+              this.loadedTicker = 1;
+              return;
+            } else {
+              this.company = res,
+              this.loadedTicker = 2;
+            }
+            }),
           (error1 => console.log(error1)),
           (() => {
-            this.loadData();
-            this.getStockSummary();
-            this.getStockNews();
+            if (this.loadedTicker === 2) {
+              this.loadData();
+              this.getStockSummary();
+              this.getStockNews();
+            }
           })
         );
     }
