@@ -6,8 +6,7 @@ import {MatTableDataSource} from '@angular/material';
 import Swal from 'sweetalert2';
 import {DataService} from '../../services/data.service';
 import {FirebaseService} from '../../services/firebase.service';
-import {WatchList} from '../your-stock/your-stock.component';
-
+import {Watchlist} from '../../model/Watchlist';
 
 @Component({
   selector: 'app-recently-searched',
@@ -21,7 +20,7 @@ export class RecentlySearchedComponent implements OnInit {
   distinctCompanyNames = [];
   companyNames = [];
   showSpinner = true;
-  watchListStocks: WatchList[] = [];
+  watchListStocks: Watchlist[] = [];
   added: boolean;
 
   displayedColumns: string[] = ['companyName', 'ticker', 'stockPrice', 'stockPriceChange', 'action'];
