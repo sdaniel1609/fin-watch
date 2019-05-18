@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Crypto} from '../../model/Crypto';
 import {CryptoService} from '../../services/crypto.service';
+import {Currency} from '../../model/Currency';
+import {MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-crypto',
@@ -10,42 +11,42 @@ import {CryptoService} from '../../services/crypto.service';
 export class CryptoComponent implements OnInit {
 
   showSpinner = true;
+  cryptos: Currency[] = [];
 
-  // TODO: Rewrite using crypto class
-  cryptoPairs = [
+  displayedColumns: string[] = ['pair', 'exchange', 'price', 'date'];
+  dataSource = new MatTableDataSource<Currency>();
+
+  trackedCryptoPairs = [
     {
-      cryptoPair: 'btcusd',
-      exchange: 'gemini',
-      cryptoPrice: null
+    cryptoPair: 'btcusd',
+    exchange: 'gemini',
     },
     {
       cryptoPair: 'btcusd',
       exchange: 'gdax',
-      cryptoPrice: null
     },
     {
       cryptoPair: 'btcusd',
       exchange: 'binance',
-      cryptoPrice: null
-    },
+    }
   ];
 
   constructor(private cryptoService: CryptoService) { }
 
-  getCryptoPrices() {
-    for (let i = 0; i < this.cryptoPairs.length; i++) {
-      this.cryptoService.getCryptoPrice(this.cryptoPairs[i].cryptoPair, this.cryptoPairs[i].exchange)
-        .subscribe( res => {
-          this.cryptoPairs[i].cryptoPrice =  res[0];
-          if (i === this.cryptoPairs.length - 1 ) {
-            this.showSpinner = false;
-          }
+
+  getCryptoPricesRR() {
+    this.trackedCryptoPairs.forEach((el) => {
+      this.cryptoService.getCryptoPrice(el.cryptoPair, el.exchange)
+        .subscribe(res => {
+          this.cryptos.push(new Currency(el.cryptoPair, res[0].close, res[0].time, el.exchange));
+          this.dataSource.data = this.cryptos as Currency [];
+          this.showSpinner = false;
         });
-    }
+    });
   }
 
   ngOnInit() {
-    this.getCryptoPrices();
+    this.getCryptoPricesRR();
   }
 
 }

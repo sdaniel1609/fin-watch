@@ -1,8 +1,25 @@
-export interface IIndex {
+export class Index {
   name: string;
-  symbol: string;
+  ticker: string;
+  currentStockPrice: number;
+  historicalStockPrices: HistoricalData[];
+
+  constructor(name: string, ticker: string, currentStockPrice: number, historicalData: HistoricalData[]) {
+    this.name = name;
+    this.ticker = ticker;
+    this.currentStockPrice = currentStockPrice;
+    this.historicalStockPrices = historicalData;
+  }
+
+  getIndexPriceChange(period: number) {
+    const difference = this.currentStockPrice - this.historicalStockPrices[period].value;
+    const change = difference / this.currentStockPrice;
+    return change;
+  }
 }
 
-export interface IIndexValue extends IIndex {
-  indexValue: number;
+
+export interface HistoricalData {
+  date: Date;
+  value: number;
 }

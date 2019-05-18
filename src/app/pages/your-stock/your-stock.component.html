@@ -5,8 +5,14 @@
         <a class="card-link title">Your Watchlist</a>
         <a (click)="openDialog()" class="card-link watchlist">Add To Watchlist <i class="fas fa-plus-circle"></i></a>
       </div>
+
+     <div class="card" *ngIf="companies.length === 0">
+        <div class="card-body">
+          <p>Your watchlist is empty. Add your favourite stocks for quick access and to stay up to date with the latest financial news.</p>
+        </div>
+      </div>
       <mat-progress-bar
-        *ngIf="companies.length == 0"
+        *ngIf="companies.length === 0"
         color='primary'
         mode='query'
         [value]=50
@@ -20,11 +26,7 @@
 <div class="container">
   <div class="row">
     <div class="col-12">
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z2">
-
-        <!--- Note that these columns can be defined in any order.
-              The actual rendered columns are set as a property on the row definition" -->
-
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z2" *ngIf="companies.length > 0">
         <!-- Position Column -->
         <ng-container matColumnDef="companyName">
           <th mat-header-cell *matHeaderCellDef> Company Name </th>
@@ -45,8 +47,16 @@
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="stockPriceChange">
-          <th mat-header-cell *matHeaderCellDef> Stock Price Change </th>
+          <th mat-header-cell *matHeaderCellDef> Stock Price Change (1 Month)</th>
           <td mat-cell *matCellDef="let element" [ngClass]="(element.getStockPriceChange(30) > 0)?'green':'red'" > {{element.getStockPriceChange(30) | percent:'1.2'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>Remove from Watchlist</th>
+          <td mat-cell *matCellDef="let element">
+            <button id="addToWatchlist" (click)="deleteWatchListItem(element.name)"><i class="fas fa-trash-alt"></i></button>
+            <!--<i class="fas fa-check-circle"></i>-->
+          </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

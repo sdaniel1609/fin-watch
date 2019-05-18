@@ -26,7 +26,6 @@ export class CompanyLookupComponent implements OnInit {
               private newsService: NewsService,
               private route: ActivatedRoute) { }
 
-
   getStockTicker(): void {
       this.stocksService.getStockTicker(this.companyName)
         .subscribe(
@@ -110,16 +109,16 @@ export class CompanyLookupComponent implements OnInit {
     });
   }
 
-  loadId(): void {
-    if (this.companyName === undefined) {
+  loadRouteId(): void {
       this.route.params.subscribe((param) => {
-        this.companyName = param['id'];
+        if (param['id']) {
+          this.companyName = param['id'];
+          this.getStockTicker();
+        }
       });
-      this.getStockTicker();
-    }
   }
 
   ngOnInit() {
-    this.loadId();
+    this.loadRouteId();
   }
 }

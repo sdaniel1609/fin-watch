@@ -1,11 +1,9 @@
 #date {
   color: gray;
 }
-
-.container{
-  padding-top: 20px;
+table {
+  width: 100%;
 }
-
 .custom-container {
-  padding: 20px;
+  margin: 5px;
 }

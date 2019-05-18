@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {IndicesService} from '../../services/indices.service';
+import {MatTableDataSource} from '@angular/material';
+import {forkJoin} from 'rxjs';
+import {Index} from '../../model';
 
-export interface HistoricalIndex {
-  date: Date;
-  value: number;
-}
+
 
 @Component({
   selector: 'app-indices',
@@ -14,69 +14,45 @@ export interface HistoricalIndex {
 
 export class IndicesComponent implements OnInit {
 
+  indices: Index[] = [];
+  displayedColumns: string[] = ['index', 'ticker', 'indexValue', 'priceChange'];
+  dataSource = new MatTableDataSource<Index>();
+
   showSpinner = true;
 
-  // TODO: Rewrite using indices class
-  trackedIndices = [
+  trackedIndicesRR = [
     {
       symbol: 'DJI',
       name: 'Dow Jones Industrial Average',
-      value: null,
-      historicalData: [{
-        date: null,
-        value: null
-      }],
-     },
+    },
     {
       symbol: 'SPX',
       name: 'S&P 500',
-      value: null,
-      historicalData: [{
-        date: null,
-        value: null
-      }],
     },
     {
       symbol: 'NDX',
       name: 'NASDAQ 100 Index',
-      value: null,
-      historicalData: [{
-        date: null,
-        value: null
-      }],
-    }
+      }
   ];
-
-
-  indexValueChange(currentValue: number, historicalValue: number) {
-    const difference = currentValue - historicalValue;
-    return difference / historicalValue;
-  }
 
   constructor(private indicesService: IndicesService) { }
 
+  getIndices(): void {
+   this.trackedIndicesRR.forEach((el) => {
+     const indexValue = this.indicesService.getIndexValueRR(el.symbol);
+     const indexHistoricalValue = this.indicesService.getIndexHistoricalValueRR(el.symbol);
 
-   getIndexValue(): void {
-    for (let i = 0; i < this.trackedIndices.length; i++) {
-      this.indicesService.getIndexValue(this.trackedIndices[i].symbol)
-        .subscribe(indexValue => this.trackedIndices[i].value = indexValue);
-    }
-  }
-
-  getIndexHistoricalValue(): void {
-    for (let i = 0; i < this.trackedIndices.length; i++) {
-      this.indicesService.getIndexHistoricalValue(this.trackedIndices[i].symbol)
-        .subscribe(indexHistoric => {
-          this.trackedIndices[i].historicalData = indexHistoric;
-          if (i === this.trackedIndices.length - 1) {
-            this.showSpinner = false;
-          }
-        });
-    }
+     forkJoin([indexValue, indexHistoricalValue]).subscribe(results => {
+       const value = results[0];
+       const historical_value = results[1]['historical_data'];
+        this.indices.push(new Index(el.name, el.symbol, value, historical_value));
+        this.dataSource.data = this.indices as Index [];
+        this.showSpinner = false;
+     });
+   });
   }
 
   ngOnInit() {
-  this.getIndexValue();
-  this.getIndexHistoricalValue();
+  this.getIndices();
   }
 }
