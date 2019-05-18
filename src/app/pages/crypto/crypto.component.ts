@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {CryptoService} from '../../services/crypto.service';
 import {Currency} from '../../model/Currency';
 import {MatTableDataSource} from '@angular/material';
-import {Company} from '../../model/company';
 
 @Component({
   selector: 'app-crypto',
