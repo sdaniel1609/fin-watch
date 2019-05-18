@@ -7,10 +7,7 @@ import {DataService} from '../../services/data.service';
 import {mergeMap} from 'rxjs/operators';
 import {FirebaseService} from '../../services/firebase.service';
 import {WatchlistStore} from '../../state/watchlist-store.service';
-export interface WatchList {
-  id?: string;
-  name: string;
-}
+import {Watchlist} from '../../model/Watchlist';
 
 @Component({
   selector: 'app-your-stock',
@@ -56,7 +53,7 @@ export class YourStockComponent implements OnInit {
   getDBWatchlist() {
     this.firebaseService.getWatchList()
       .subscribe(watchList => {
-        this.watchList = watchList as WatchList[];
+        this.watchList = watchList as Watchlist[];
         this.setCompanies();
       });
   }
@@ -76,10 +73,8 @@ export class YourStockComponent implements OnInit {
         return {
           id: e.payload.doc.id,
           ...e.payload.doc.data()
-        } as WatchList;
+        } as Watchlist;
       });
     });
-
-    console.log(this.watchListRR);
-    }
+   }
   }
