@@ -16,7 +16,7 @@
   <!-- Position Column -->
   <ng-container matColumnDef="stockName">
     <th mat-header-cell *matHeaderCellDef> Company Name </th>
-    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    <td  mat-cell *matCellDef="let element"> <a routerLink="/company-lookup/{{element.name}}">{{element.name}} </a> </td>
   </ng-container>
 
   <!-- Name Column -->
