@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {ForexService} from '../../services/forex.service';
 import {Forex} from '../../model/forex';
 import {map} from 'rxjs/operators';
+import {Currency} from '../../model/Currency';
+import {MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-forex',
@@ -10,40 +12,24 @@ import {map} from 'rxjs/operators';
 })
 export class ForexComponent implements OnInit {
   showSpinner = true;
-  // TODO: Rewrite using forex class
-  currencyPairs = [
-    {
-    currencyPair: 'GBPUSD',
-    currencyPairPrice: null
-    },
-    {
-      currencyPair: 'EURUSD',
-      currencyPairPrice: null
-    },
-    {
-      currencyPair: 'USDJPY',
-      currencyPairPrice: null
-    },
-    {
-      currencyPair: 'USDCHF',
-      currencyPairPrice: null
-    },
-  ];
+  trackedCurrencyPairs = ['GBPUSD', 'EURUSD', 'USDJPY', 'USDCHF']
+  currencyPairsRR: Currency[] = [];
+
+  displayedColumns: string[] = ['pair', 'price', 'date'];
+  dataSource = new MatTableDataSource<Currency>();
 
   constructor(public forexService: ForexService) { }
 
-  getCurrencyPrice() {
-    for (let i = 0; i < this.currencyPairs.length; i++ ) {
-      this.forexService.getCurrencyPrice(this.currencyPairs[i].currencyPair)
+  getCurrencyPriceRR() {
+    this.trackedCurrencyPairs.forEach((el) => {
+      this.forexService.getCurrencyPrice(el)
         .subscribe(res => {
-          this.currencyPairs[i].currencyPairPrice = res;
-          if (i === this.currencyPairs.length -1 ) {
-            this.showSpinner = false;
-          }
+          this.currencyPairsRR.push(new Currency(el, res.close_bid, res.occurred_at));
+          this.dataSource.data = this.currencyPairsRR as Currency[];
+          this.showSpinner = false;
         });
-    }
+    });
   }
   ngOnInit() {
-   this.getCurrencyPrice();
-
+   this.getCurrencyPriceRR();
 }}

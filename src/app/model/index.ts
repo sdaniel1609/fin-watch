@@ -11,7 +11,7 @@ export class Index {
     this.historicalStockPrices = historicalData;
   }
 
-  getStockPriceChange(period: number) {
+  getIndexPriceChange(period: number) {
     const difference = this.currentStockPrice - this.historicalStockPrices[period].value;
     const change = difference / this.currentStockPrice;
     return change;

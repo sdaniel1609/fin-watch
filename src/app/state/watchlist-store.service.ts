@@ -1,40 +1,19 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {FirebaseService} from '../services/firebase.service';
-export class WatchList {
-  id?: string;
-  name: string;
-  constructor(id: any, name: any) {
-    this.id = id;
-    this.name = name;
-  }
-}
+
+
+import { AngularFirestore } from '@angular/fire/firestore';
+
+
 @Injectable({
   providedIn: 'root'
 })
+
 export class WatchlistStore {
 
-  private _watchlists: BehaviorSubject<any> = new BehaviorSubject([]);
-
-  constructor(private firebaseService: FirebaseService) {
-    this.loadInitialWatchlist();
+  constructor(private angularFirestore: AngularFirestore) {
   }
 
   getWatchlist() {
-    return this._watchlists.asObservable();
+    return this.angularFirestore.collection('watchlist').snapshotChanges();
   }
-
-  loadInitialWatchlist() {
-    this.firebaseService.getAllWatchlist()
-      .subscribe(
-        res => {
-                this._watchlists.next(res);
-        },
-        err => console.log('Error retrieving Todos' + err)
-
-      );
-  }
-
-
-
 }
