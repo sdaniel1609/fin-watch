@@ -18,3 +18,7 @@ mat-card{
 form {
   display: flex;
 }
+
+.financials-table{
+  padding-top: 10px;
+}
