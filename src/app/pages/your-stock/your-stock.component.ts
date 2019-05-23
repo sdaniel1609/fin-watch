@@ -33,9 +33,7 @@ export class YourStockComponent implements OnInit {
       width: '80%',
       data: this.watchList
     });
-
   }
-
 
   setCompanies(): void {
     this.companies = [];
