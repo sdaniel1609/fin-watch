@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { AngularFireDatabase, AngularFireList} from 'angularfire2/database';
 import {map} from 'rxjs/operators';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 
 export interface WatchList {
   id?: string;
@@ -19,7 +18,7 @@ export class FirebaseService {
   stockAdded: boolean;
 
 
-  constructor(private fireStore: AngularFirestore, private afs: AngularFirestore, private af: AngularFireDatabase) {
+  constructor(private fireStore: AngularFirestore, private afs: AngularFirestore) {
     this.watchListCollection = this.afs.collection('watchlist');
   }
 
@@ -56,17 +55,6 @@ export class FirebaseService {
         })
       );
     return this.watchList;
-  }
-
-
-  getAllWatchlist() {
-    return this.watchListCollection.snapshotChanges().pipe( map(changes => {
-      return changes.map(action => {
-        const data = action.payload.doc.data();
-        data.id = action.payload.doc.id;
-        return data;
-      });
-    }));
   }
 
 }

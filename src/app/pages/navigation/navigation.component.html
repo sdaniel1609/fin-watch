@@ -1,19 +1,9 @@
 <div class="toolbar-container" [class.toolbar-is-mobile]="mobileQuery.matches">
-  <mat-toolbar *ngIf="isLoggedIn" color="primary" class="example-toolbar">
+  <mat-toolbar  color="primary" class="example-toolbar">
     <button mat-icon-button class="nav-btn" (click)="snav.toggle()"> <i class="fas fa-bars"></i></button>
     <span class="spacer"></span>
     <div class="nav-btns">
       <button mat-flat-button (click)="searchInstrument()"><i class="fas fa-search"></i></button>
-      <span *ngIf="!isLoggedIn">
-         •
-        <button mat-flat-button routerLink="/login">Login</button> •
-        <button mat-flat-button routerLink="/register">Sign Up</button>
-      </span>
-      <span *ngIf="isLoggedIn">
-         •
-      <button  mat-flat-button routerLink="/users">Admin</button> •
-        <button  mat-flat-button (click)="onLogoutClick()">Logout</button>
-      </span>
     </div>
   </mat-toolbar>
   <mat-sidenav-container class="example-sidenav-container">

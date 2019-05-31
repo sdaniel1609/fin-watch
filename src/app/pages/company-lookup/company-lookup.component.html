@@ -47,6 +47,23 @@
   </div>
 </div>
 
+
+<div class="financials-table container" *ngIf="financials">
+  <table class="table table-striped table-bordered" >
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">Income Statement</th>
+      <th scope="col">{{financials.fundamental.filing_date | date}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let financial of financials.standardized_financials">
+      <th scope="row">{{financial.data_tag.name}}</th>
+      <td>{{financial.value | currency: 'USD'}}</td>
+    </tbody>
+  </table>
+
+
 <div *ngIf="dataIsLoaded" class="container">
   <div class="row">
     <div class="col-12">

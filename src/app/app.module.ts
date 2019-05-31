@@ -49,16 +49,16 @@ import { RecentlySearchedComponent } from './pages/recently-searched/recently-se
 import { NgxSpinnerModule } from 'ngx-spinner';
 
 const appRoutes: Routes = [
-  { path: '', component: LoginComponent },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-  { path: 'your-stock', component: YourStockComponent, canActivate: [AuthGuard] },
-  { path: 'forex', component: ForexComponent, canActivate: [AuthGuard] },
-  { path: 'company-lookup', component: CompanyLookupComponent, canActivate: [AuthGuard] },
-  { path: 'company-lookup/:id', component: CompanyLookupComponent, canActivate: [AuthGuard] },
+  { path: '', component: DashboardComponent },
+  { path: 'dashboard', component: DashboardComponent},
+  { path: 'your-stock', component: YourStockComponent },
+  { path: 'forex', component: ForexComponent },
+  { path: 'company-lookup', component: CompanyLookupComponent},
+  { path: 'company-lookup/:id', component: CompanyLookupComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'users', component: UsersComponent, canActivate: [AuthGuard] },
-  { path: 'crypto', component: CryptoComponent, canActivate: [AuthGuard] },
+  { path: 'users', component: UsersComponent },
+  { path: 'crypto', component: CryptoComponent },
 ];
 
 @NgModule({

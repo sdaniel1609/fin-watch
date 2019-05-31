@@ -4,6 +4,8 @@ import {Chart} from 'chart.js';
 import {NewsService} from '../../services/news.service';
 import {ActivatedRoute} from '@angular/router';
 import {IStockPrice} from '../../model/StockPrice';
+import {Financial} from '../../model/Financial';
+import {FinancialService} from '../../services/financial.service';
 
 @Component({
   selector: 'app-company-lookup',
@@ -21,10 +23,12 @@ export class CompanyLookupComponent implements OnInit {
   stockPriceInfo: IStockPrice;
   news = [];
   chart: Chart;
+  financials: Financial;
 
   constructor(private stocksService: StocksService,
               private newsService: NewsService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private financialService: FinancialService) { }
 
   getStockTicker(): void {
       this.stocksService.getStockTicker(this.companyName)
@@ -35,10 +39,10 @@ export class CompanyLookupComponent implements OnInit {
             this.loadData();
             this.getStockSummary();
             this.getStockNews();
+            this.getCompanyFinancials();
           })
         );
     }
-
   getStockSummary(): void {
     this.stocksService.getStockSummary(this.company.ticker)
       .subscribe(stockSummary => this.stockSummary = stockSummary);
@@ -47,6 +51,14 @@ export class CompanyLookupComponent implements OnInit {
   getStockNews(): void {
     this.newsService.getCompanyNews(this.company.ticker)
       .subscribe(res => this.news = res);
+  }
+
+  getCompanyFinancials(): void {
+    this.financialService.getCompanyFinancials(this.company.ticker)
+      .subscribe(response => {
+        this.financials = response;
+        console.log(this.financials);
+      });
   }
 
   loadData(): void {
