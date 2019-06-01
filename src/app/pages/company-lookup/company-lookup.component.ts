@@ -70,7 +70,6 @@ export class CompanyLookupComponent implements OnInit {
     this.financialReports.getCompanyFinancials(this.company.ticker)
       .subscribe(response => {
         this.financials = response;
-        console.log(this.financials);
       });
   }
 

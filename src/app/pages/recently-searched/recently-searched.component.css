@@ -1,6 +1,9 @@
 table {
   width: 100%;
 }
+table .material-icons {
+  font-size: 15px;
+}
 table button {
   border: none;
 }

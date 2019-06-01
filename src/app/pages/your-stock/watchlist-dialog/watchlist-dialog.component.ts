@@ -18,7 +18,7 @@ export interface WatchList {
 })
 export class WatchlistDialogComponent implements OnInit {
   watchList = [];
-  displayedColumns: string[] = ['name', 'ticker', 'exchange'];
+  displayedColumns: string[] = ['name', 'ticker', 'exchange' , 'action'];
   dataSource = new MatTableDataSource<DBStock>();
 
   @Output() submitStock = new EventEmitter<any>();

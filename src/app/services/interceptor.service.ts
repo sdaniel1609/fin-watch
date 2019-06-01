@@ -22,5 +22,3 @@ export class InterceptorService implements HttpInterceptor {
     finalize(() => this.loaderService.hide());
   }
 }
-
-
