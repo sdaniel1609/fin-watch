@@ -4,8 +4,6 @@ import {MatTableDataSource} from '@angular/material';
 import {forkJoin} from 'rxjs';
 import {Index} from '../../model';
 
-
-
 @Component({
   selector: 'app-indices',
   templateUrl: './indices.component.html',

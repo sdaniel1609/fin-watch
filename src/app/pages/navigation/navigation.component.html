@@ -2,20 +2,11 @@
   <mat-toolbar  color="primary" class="example-toolbar">
     <span class="icons">
       <i class="material-icons" matTooltip="Menu" (click)="snav.toggle()">menu</i>
-      <!--<i class="material-icons"  matTooltip="Dashboard" routerLink="/dashboard">dashboard</i>
-      <i class="material-icons"  matTooltip="Watchlist" routerLink="/your-stock">watch_later</i>
-      <i class="material-icons"  matTooltip="Forex" routerLink="/forex" >attach_money</i>
-      <i class="material-icons"  matTooltip="Crypto" routerLink="/crypto">monetization_on</i>-->
     </span>
 
     <span class="spacer"></span>
     <div class="nav-btns">
       <button mat-flat-button matTooltip="Company Search" (click)="searchInstrument()"><i class="fas fa-search"></i></button>
-      <span>
-         •
-        <button mat-flat-button routerLink="/login">Login</button> •
-        <button mat-flat-button routerLink="/register">Register</button>
-      </span>
     </div>
   </mat-toolbar>
   <mat-sidenav-container class="example-sidenav-container">
@@ -29,10 +20,8 @@
         <a mat-list-item routerLink="/crypto"> <i class="material-icons" >monetization_on</i> Crypto</a>
       </mat-nav-list>
     </mat-sidenav>
-
     <mat-sidenav-content>
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
-
