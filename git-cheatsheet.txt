@@ -37,6 +37,7 @@ DONE_TODO - Dashboard: Add price change arrow indication
 DONE_TODO - watchlist popup: add add button
 DONE_TODO - Lookup page: change layout - for inspiration: https://www.stockflare.com/stock/fvib.cr
 DONE_TODO - Lookup page: fix chart rendering bug
+TODO - remove firebase key
 
 
 
