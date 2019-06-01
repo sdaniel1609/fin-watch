@@ -20,6 +20,9 @@
   background: none;
   color: white;
 }
+.toolbar-container .logo img {
+  color: white;
+}
 .toolbar-container .icons i {
   margin: 0 10px 0 10px;
 }
