@@ -15,7 +15,7 @@ export class InterceptorService implements HttpInterceptor {
     this.loaderService.show();
     const newRequest = req.clone({
       headers: req.headers.set(
-        'Authorization', 'Bearer' + ' OmEyODA1YTFkNTY4Y2M5YTkzNDA4M2ViMjJlMmE5NzEw'
+        'Authorization', 'Bearer' + ' OjRiMDc0MTFmNTA0YWNlNDUzZTJmNGQwMTRkNjA1ODJm'
       )
     });
     return next.handle(newRequest);
