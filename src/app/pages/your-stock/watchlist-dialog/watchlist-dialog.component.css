@@ -14,3 +14,12 @@ table {
 .mat-row:hover {
   background-color: #a53cf6;
 }
+.fa-plus-circle:hover {
+  color: white;
+  cursor: pointer;
+}
+
+.btn-done{
+  background: none;
+  border: none;
+}

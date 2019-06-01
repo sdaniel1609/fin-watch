@@ -35,12 +35,14 @@ export class NavigationComponent implements OnDestroy, OnInit {
 
   searchInstrument(): void {
     Swal.fire({
+      title: 'Search for company',
+      text: 'Intrinio sanbox API only supports search for Dow 30 companies',
       inputPlaceholder: 'Enter a symbol or a keyword',
       input: 'text',
       showCancelButton: true,
       confirmButtonText: 'Look up',
       showLoaderOnConfirm: true,
-      backdrop: `rgba(0,0,123,0.4)`,
+      backdrop: `#505764`,
       allowOutsideClick: () => !Swal.isLoading()
     }).then((result) => {
       if (result.value) {
@@ -50,16 +52,6 @@ export class NavigationComponent implements OnDestroy, OnInit {
     });
   }
 
-  onLogoutClick(): void {
-    this.authService.logout();
-    window.location.reload();
-    this.router.navigate(['/login']);
-    Swal.fire({
-      type: 'success',
-      title: 'Successfully Logged Out',
-      timer: 1000,
-    });
-  }
   ngOnInit(): void {
     this.authService.getAuth()
       .subscribe(auth => {

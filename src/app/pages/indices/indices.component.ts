@@ -51,7 +51,6 @@ export class IndicesComponent implements OnInit {
      });
    });
   }
-
   ngOnInit() {
   this.getIndices();
   }

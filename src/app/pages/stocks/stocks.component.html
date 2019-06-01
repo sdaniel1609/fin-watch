@@ -34,7 +34,11 @@
   <!-- Symbol Column -->
   <ng-container matColumnDef="priceChange">
     <th mat-header-cell *matHeaderCellDef> Stock Price Change </th>
-    <td mat-cell *matCellDef="let element" [ngClass]="(element.getStockPriceChange(30) > 0)?'green':'red'" > {{element.getStockPriceChange(30) | percent:'1.2'}} </td>
+    <td mat-cell *matCellDef="let element" [ngClass]="(element.getStockPriceChange(30) > 0)?'green':'red'" >
+      <i *ngIf="element.getStockPriceChange(30) < 0" class="material-icons indicator">arrow_downward</i>
+      <i *ngIf="element.getStockPriceChange(30) > 0" class="material-icons indicator">arrow_upward</i>
+
+      {{element.getStockPriceChange(30) | percent:'1.2'}} </td>
   </ng-container>
 
 

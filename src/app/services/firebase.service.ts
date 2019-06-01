@@ -58,15 +58,4 @@ export class FirebaseService {
     return this.watchList;
   }
 
-
-  getAllWatchlist() {
-    return this.watchListCollection.snapshotChanges().pipe( map(changes => {
-      return changes.map(action => {
-        const data = action.payload.doc.data();
-        data.id = action.payload.doc.id;
-        return data;
-      });
-    }));
-  }
-
 }

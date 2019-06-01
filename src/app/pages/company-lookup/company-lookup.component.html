@@ -5,7 +5,9 @@
        <mat-form-field class="example-full-width">
           <input matInput [(ngModel)]="companyName" name="company" (keyup.enter)="getStockTicker()" placeholder="Search Security">
        </mat-form-field>
+<!--
         <button mat-flat-button (click)="getStockTicker()"><i class="fas fa-search"></i></button>
+-->
       </form>
     </div>
   </div>
@@ -26,12 +28,35 @@
 
   <div class="info" *ngIf="loadedTicker === 2">
     <div *ngIf="dataIsLoaded" class="row">
-      <div class="col-12">
-        <h5>Stock Summary</h5>
+
+
+        <div class="col-sm-6">
+          <div class="card text-center">
+            <div class="card-header"> Company Info</div>
+            <div class="card-body">
+              <p>Legal Name:  {{stockSummary?.legal_name}}</p>
+              <p>CEO: {{stockSummary?.ceo}}</p>
+              <p>Industry Category: {{stockSummary?.industry_category}}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="card text-center">
+            <div class="card-header">
+              Stats for {{stockPriceInfo?.date}}
+            </div>
+            <div class="card-body">
+              <p>Open: {{stockPriceInfo?.open}}</p>
+              <p>High: {{stockPriceInfo?.high}}</p>
+              <p>Close: {{stockPriceInfo?.close}}</p>
+            </div>
+          </div>
+        </div>
+        <!--<h5>Stock Summary</h5>
         <h6>Legal Name: {{stockSummary?.legal_name}}</h6>
         <h6>CEO: {{stockSummary?.ceo}}</h6>
-        <h6>Industry Category: {{stockSummary?.industry_category}}</h6>
-      </div>
+        <h6>Industry Category: {{stockSummary?.industry_category}}</h6>-->
     </div>
 
     <div class="row">
@@ -39,15 +64,6 @@
         <div>
           <canvas id="canvas">{{ chart }}</canvas>
         </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-12 col-lg-4">
-        <h6>Open: {{stockPriceInfo?.open}}</h6>
-        <h6>High: {{stockPriceInfo?.high}}</h6>
-        <h6>Close: {{stockPriceInfo?.close}}</h6>
-        <h6>Date: {{stockPriceInfo?.date}}</h6>
       </div>
     </div>
 

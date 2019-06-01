@@ -75,10 +75,9 @@ export class RecentlySearchedComponent implements OnInit {
 
 
   ngOnInit() {
-   this.localStorageCompanies.push(JSON.parse(localStorage.getItem('companies')));
-    this.fetchLocalStorage();
-
-
+    if (localStorage.getItem('companies') !== null) {
+      this.localStorageCompanies.push(JSON.parse(localStorage.getItem('companies')));
+      this.fetchLocalStorage();
+    }
   }
-
 }
