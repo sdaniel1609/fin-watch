@@ -8,3 +8,8 @@ table {
     border: none;
   }
 }
+@media only screen and (max-width: 600px) {
+  th, td {
+    font-size: 10px;
+  }
+}
