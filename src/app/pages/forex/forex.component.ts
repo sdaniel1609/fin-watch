@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {ForexService} from '../../services/forex.service';
-import {Forex} from '../../model/forex';
-import {map} from 'rxjs/operators';
 import {Currency} from '../../model/Currency';
 import {MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-forex',
   templateUrl: './forex.component.html',
-  styleUrls: ['./forex.component.css']
+  styleUrls: ['./forex.component.scss']
 })
 export class ForexComponent implements OnInit {
   showSpinner = true;

@@ -1,4 +1,4 @@
-export interface Watchlist {
+export interface IWatchlist {
   id?: string;
   name: string;
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from 'angularfire2/firestore';
-import {User} from '../model/User';
+import {IUser} from '../model/IUser';
 import {Observable, from, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 
@@ -9,10 +9,8 @@ import {map} from 'rxjs/operators';
 })
 export class UserService {
 
-  userCollection: AngularFirestoreCollection<User>;
-  userDoc: AngularFirestoreDocument<User>;
-  users: Observable<User[]>;
-  user: Observable<User>;
+  userCollection: AngularFirestoreCollection<IUser>;
+  users: Observable<IUser[]>;
 
 
   constructor(private afs: AngularFirestore) {
@@ -24,7 +22,7 @@ export class UserService {
       .pipe(
         map(changes => {
           return changes.map(action => {
-            const data = action.payload.doc.data() as User;
+            const data = action.payload.doc.data() as IUser;
             data.id = action.payload.doc.id;
             return data;
           });

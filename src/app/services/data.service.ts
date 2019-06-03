@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
 import {WatchList} from './firebase.service';
 import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
 

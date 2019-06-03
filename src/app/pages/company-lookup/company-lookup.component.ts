@@ -3,14 +3,15 @@ import {StocksService} from '../../services/stocks.service';
 import {Chart} from 'chart.js';
 import {NewsService} from '../../services/news.service';
 import {ActivatedRoute} from '@angular/router';
-import {IStockPrice} from '../../model/StockPrice';
+import {IStockPrice} from '../../model/IStockPrice';
 import {FinancialsService} from '../../services/financials.service';
 import {Financials} from '../../model/Financials';
+
 
 @Component({
   selector: 'app-company-lookup',
   templateUrl: './company-lookup.component.html',
-  styleUrls: ['./company-lookup.component.css']
+  styleUrls: ['./company-lookup.component.scss']
 })
 export class CompanyLookupComponent implements OnInit {
 

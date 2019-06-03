@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {WatchlistDialogComponent} from './watchlist-dialog/watchlist-dialog.component';
 import {MatDialog, MatTableDataSource} from '@angular/material';
-import {Company} from '../../model/company';
+import {Company} from '../../model/Company';
 import {StocksService} from '../../services/stocks.service';
 import {DataService} from '../../services/data.service';
 import {mergeMap} from 'rxjs/operators';
 import {FirebaseService} from '../../services/firebase.service';
 import {WatchlistStore} from '../../state/watchlist-store.service';
-import {Watchlist} from '../../model/Watchlist';
+import {IWatchlist} from '../../model/IWatchlist';
 
 @Component({
   selector: 'app-your-stock',
@@ -51,7 +51,7 @@ export class YourStockComponent implements OnInit {
   getDBWatchlist() {
     this.firebaseService.getWatchList()
       .subscribe(watchList => {
-        this.watchList = watchList as Watchlist[];
+        this.watchList = watchList as IWatchlist[];
         this.setCompanies();
       });
   }
@@ -71,7 +71,7 @@ export class YourStockComponent implements OnInit {
         return {
           id: e.payload.doc.id,
           ...e.payload.doc.data()
-        } as Watchlist;
+        } as IWatchlist;
       });
     });
    }

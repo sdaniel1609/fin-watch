@@ -7,7 +7,7 @@ import {Currency} from '../../model/Currency';
 @Component({
   selector: 'app-crypto',
   templateUrl: './crypto.component.html',
-  styleUrls: ['./crypto.component.css']
+  styleUrls: ['./crypto.component.scss']
 })
 export class CryptoComponent implements OnInit {
 

@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import {Router} from '@angular/router';
 import {LocalStorageService} from '../../services/local-storage.service';
 import {AuthService} from '../../services/auth.service';
-import {User} from '../../model/User';
+import {IUser} from '../../model/IUser';
 
 @Component({
   selector: 'app-navigation',
