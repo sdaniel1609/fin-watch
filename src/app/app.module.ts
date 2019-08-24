@@ -47,18 +47,19 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { RecentlySearchedComponent } from './pages/recently-searched/recently-searched.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
-
+import { LogoutComponent } from './pages/logout/logout.component';
+import {RoleGuardService} from './guards/role-guard.service';
 const appRoutes: Routes = [
-  { path: '', component: DashboardComponent},
-  { path: 'dashboard', component: DashboardComponent},
-  { path: 'your-stock', component: YourStockComponent },
-  { path: 'forex', component: ForexComponent },
-  { path: 'company-lookup', component: CompanyLookupComponent },
-  { path: 'company-lookup/:id', component: CompanyLookupComponent },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
+  { path: 'your-stock', component: YourStockComponent, canActivate: [RoleGuardService], data: {role: 'ROLE_ADMIN'} },
+  { path: 'forex', component: ForexComponent, canActivate: [AuthGuard] },
+  { path: 'company-lookup', component: CompanyLookupComponent, canActivate: [AuthGuard], data: {role: 'ROLE_ADMIN'} },
+  { path: 'company-lookup/:id', component: CompanyLookupComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'users', component: UsersComponent },
-  { path: 'crypto', component: CryptoComponent },
+  { path: 'users', component: UsersComponent, canActivate: [AuthGuard] },
+  { path: 'crypto', component: CryptoComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
@@ -77,7 +78,8 @@ const appRoutes: Routes = [
     CryptoComponent,
     YourStockComponent,
     WatchlistDialogComponent,
-    RecentlySearchedComponent
+    RecentlySearchedComponent,
+    LogoutComponent
   ],
   entryComponents: [WatchlistDialogComponent],
   imports: [
@@ -110,7 +112,9 @@ const appRoutes: Routes = [
     MatProgressBarModule,
     NgxSpinnerModule
   ],
-  providers: [AngularFireDatabase, IndicesService, AuthGuard, UserService, HttpClientModule, { provide: FirestoreSettingsToken, useValue: {}}, {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }],
+  providers: [AngularFireDatabase, IndicesService, AuthGuard, UserService, HttpClientModule,
+    { provide: FirestoreSettingsToken, useValue: {}},
+    {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -27,7 +27,7 @@ export class NavigationComponent implements OnDestroy, OnInit {
     media: MediaMatcher,
     private router: Router,
     private localStorage: LocalStorageService,
-    private authService: AuthService) {
+    public authService: AuthService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -52,8 +52,13 @@ export class NavigationComponent implements OnDestroy, OnInit {
     });
   }
 
+  logout() {
+    this.authService.logOut();
+    this.router.navigate(['login']);
+  }
+
   ngOnInit(): void {
-    this.authService.getAuth()
+  /*  this.authService.getAuth()
       .subscribe(auth => {
         if (auth) {
           this.isLoggedIn = true;
@@ -61,7 +66,7 @@ export class NavigationComponent implements OnDestroy, OnInit {
         } else {
           this.isLoggedIn = false;
         }
-      });
+      });*/
   }
 
   ngOnDestroy(): void {

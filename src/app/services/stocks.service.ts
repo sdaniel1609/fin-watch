@@ -6,7 +6,6 @@ import {ICompanyInfo} from '../model/ICompanyInfo';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from 'angularfire2/firestore';
 import {DBStock} from '../model/DBStock';
 
-
 @Injectable({
   providedIn: 'root'
 })
