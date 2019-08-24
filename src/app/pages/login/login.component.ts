@@ -6,12 +6,13 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
 
-  email: string;
+  username: string;
   password: string;
+  isInValidLogin = false;
 
   constructor(
     private authService: AuthService,
@@ -19,7 +20,30 @@ export class LoginComponent implements OnInit {
   ) { }
 
   onSubmit() {
-    this.authService.login(this.email, this.password)
+    this.authService.authenticate(this.username, this.password).subscribe(res => {
+      if (res.accessToken) {
+          Swal.fire({
+            type: 'success',
+            title: 'Successfully Logged in',
+            timer: 2000,
+          })
+          this.router.navigate(['/dashboard']);
+      } else {
+        Swal.fire({
+          type: 'error',
+          title: 'Invalid Credentials',
+          timer: 2000,
+        });
+      }
+    });
+ /*
+   if (this.authService.authenticate(this.username, this.password)) {
+      this.router.navigate(['dashboard']);
+      this.isInValidLogin = false;
+    } else {
+     this.isInValidLogin = false;
+   }*/
+ /*   this.authService.login(this.email, this.password)
       .then(res => {
         Swal.fire({
           type: 'success',
@@ -34,14 +58,14 @@ export class LoginComponent implements OnInit {
           title: err.message,
           timer: 2000,
         });
-      });
+      });*/
   }
   ngOnInit() {
-    this.authService.getAuth()
+/*    this.authService.getAuth()
       .subscribe(auth => {
         if (auth) {
           this.router.navigate(['/dashboard']);
         }
-      });
+      });*/
   }
 }

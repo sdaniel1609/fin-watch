@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import {MatTableDataSource} from '@angular/material';
+
 import {CryptoService} from '../../services/crypto.service';
 import {Currency} from '../../model/Currency';
-import {MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-crypto',
   templateUrl: './crypto.component.html',
-  styleUrls: ['./crypto.component.css']
+  styleUrls: ['./crypto.component.scss']
 })
 export class CryptoComponent implements OnInit {
 

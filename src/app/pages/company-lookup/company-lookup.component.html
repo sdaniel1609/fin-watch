@@ -1,63 +1,98 @@
 <div class="container ">
   <div class="row justify-content-center">
-    <div class="col-6">
-      <div class="card">
-        <div class="card-body">
-          <p><i class="fas fa-info-circle"></i> Intrinio Sandbox API only supports lookup for DOW 30 Companies</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
-
-
-<div class="container ">
-  <div class="row justify-content-center">
     <div class="col-12">
       <form class="example-form">
        <mat-form-field class="example-full-width">
           <input matInput [(ngModel)]="companyName" name="company" (keyup.enter)="getStockTicker()" placeholder="Search Security">
        </mat-form-field>
+<!--
         <button mat-flat-button (click)="getStockTicker()"><i class="fas fa-search"></i></button>
+-->
       </form>
     </div>
   </div>
-  <div *ngIf="dataIsLoaded" class="row">
-    <div class="col-12">
-      <h5>Stock Summary</h5>
-      <h6>Legal Name: {{stockSummary?.legal_name}}</h6>
-      <h6>CEO: {{stockSummary?.ceo}}</h6>
-      <h6>Industry Category: {{stockSummary?.industry_category}}</h6>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12 col-lg-8">
-      <div *ngIf="dataIsLoaded">
-        <canvas id="canvas">{{ chart }}</canvas>
+
+  <div class="info-error" *ngIf="loadedTicker ===1">
+    <div class="container ">
+      <div class="row justify-content-center">
+        <div class="col-6">
+          <div class="card">
+            <div class="card-body">
+              <p><i class="fas fa-info-circle"></i> No Results Found. Intrinio Sandbox API only supports lookup for DOW 30 Companies</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div *ngIf="dataIsLoaded"  class="row">
-    <div class="col-12 col-lg-4">
-      <h6>Open: {{stockPriceInfo?.open}}</h6>
-      <h6>High: {{stockPriceInfo?.high}}</h6>
-      <h6>Close: {{stockPriceInfo?.close}}</h6>
-      <h6>Date: {{stockPriceInfo?.date}}</h6>
+
+  <div class="info" *ngIf="loadedTicker === 2">
+    <div *ngIf="dataIsLoaded" class="row">
+
+
+        <div class="col-sm-6">
+          <div class="card text-center">
+            <div class="card-header"> Company Info</div>
+            <div class="card-body">
+              <p>Legal Name:  {{stockSummary?.legal_name}}</p>
+              <p>CEO: {{stockSummary?.ceo}}</p>
+              <p>Industry Category: {{stockSummary?.industry_category}}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="card text-center">
+            <div class="card-header">
+              Stats for {{stockPriceInfo?.date}}
+            </div>
+            <div class="card-body">
+              <p>Open: {{stockPriceInfo?.open}}</p>
+              <p>High: {{stockPriceInfo?.high}}</p>
+              <p>Close: {{stockPriceInfo?.close}}</p>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <div>
+          <canvas id="canvas">{{ chart }}</canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="financials-table container" *ngIf="financials">
+      <table class="table table-striped table-bordered" >
+        <thead class="thead-dark">
+        <tr>
+          <th scope="col">Income Statement</th>
+          <th scope="col">{{financials.fundamental.filing_date | date}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let financial of financials.standardized_financials">
+          <th scope="row">{{financial.data_tag.name}}</th>
+          <td>{{financial.value | currency: 'USD'}}</td>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h5>{{stockSummary?.legal_name}} News</h5>
+          <mat-card *ngFor="let n of news">
+            <mat-card-header>
+              <mat-card-title><a target="_blank" href="{{n?.url}}">{{n?.title}}</a></mat-card-title>
+              <mat-card-subtitle>{{n?.publication_date | date: 'long'}}</mat-card-subtitle>
+            </mat-card-header>
+          </mat-card>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<div *ngIf="dataIsLoaded" class="container">
-  <div class="row">
-    <div class="col-12">
-      <h5>{{stockSummary?.legal_name}} News</h5>
-      <mat-card *ngFor="let n of news">
-        <mat-card-header>
-          <mat-card-title><a target="_blank" href="{{n?.url}}">{{n?.title}}</a></mat-card-title>
-          <mat-card-subtitle>{{n?.publication_date | date: 'long'}}</mat-card-subtitle>
-        </mat-card-header>
-      </mat-card>
-    </div>
-  </div>
-</div>
 

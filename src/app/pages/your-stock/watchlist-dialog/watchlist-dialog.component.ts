@@ -14,11 +14,11 @@ export interface WatchList {
 @Component({
   selector: 'app-watchlist-dialog',
   templateUrl: './watchlist-dialog.component.html',
-  styleUrls: ['./watchlist-dialog.component.css']
+  styleUrls: ['./watchlist-dialog.component.scss']
 })
 export class WatchlistDialogComponent implements OnInit {
   watchList = [];
-  displayedColumns: string[] = ['name', 'ticker', 'exchange'];
+  displayedColumns: string[] = ['name', 'ticker', 'exchange' , 'action'];
   dataSource = new MatTableDataSource<DBStock>();
 
   @Output() submitStock = new EventEmitter<any>();

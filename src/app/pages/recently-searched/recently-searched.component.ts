@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {Company} from '../../model/company';
+import {Company} from '../../model/Company';
 import {StocksService} from '../../services/stocks.service';
 import {mergeMap} from 'rxjs/operators';
 import {MatTableDataSource} from '@angular/material';
 import Swal from 'sweetalert2';
 import {DataService} from '../../services/data.service';
 import {FirebaseService} from '../../services/firebase.service';
-import {WatchList} from '../your-stock/your-stock.component';
-
 
 @Component({
   selector: 'app-recently-searched',
@@ -21,7 +19,6 @@ export class RecentlySearchedComponent implements OnInit {
   distinctCompanyNames = [];
   companyNames = [];
   showSpinner = true;
-  watchListStocks: WatchList[] = [];
   added: boolean;
 
   displayedColumns: string[] = ['companyName', 'ticker', 'stockPrice', 'stockPriceChange', 'action'];
@@ -76,10 +73,9 @@ export class RecentlySearchedComponent implements OnInit {
 
 
   ngOnInit() {
-   this.localStorageCompanies.push(JSON.parse(localStorage.getItem('companies')));
-    this.fetchLocalStorage();
-
-
+    if (localStorage.getItem('companies') !== null) {
+      this.localStorageCompanies.push(JSON.parse(localStorage.getItem('companies')));
+      this.fetchLocalStorage();
+    }
   }
-
 }

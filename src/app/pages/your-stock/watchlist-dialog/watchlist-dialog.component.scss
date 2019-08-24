@@ -1,0 +1,30 @@
+h6 {
+  color: gray;
+}
+
+/* Structure */
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+.mat-row:hover {
+  background-color: #a53cf6;
+}
+.fa-plus-circle:hover {
+  color: white;
+  cursor: pointer;
+}
+
+.btn-done{
+  background: none;
+  border: none;
+}
+@media only screen and (max-width: 600px) {
+  th, td {
+    font-size: 10px;
+  }
+}

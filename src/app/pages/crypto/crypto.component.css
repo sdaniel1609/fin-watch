@@ -1,6 +1,15 @@
 .custom-container {
   margin: 5px;
 }
+
 table {
   width: 100%;
 }
+
+@media only screen and (max-width: 600px) {
+  th, td {
+    font-size: 10px;
+  }
+}
+
+/*# sourceMappingURL=crypto.component.css.map */

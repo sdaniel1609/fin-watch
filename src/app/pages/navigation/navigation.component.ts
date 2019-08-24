@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import {Router} from '@angular/router';
 import {LocalStorageService} from '../../services/local-storage.service';
 import {AuthService} from '../../services/auth.service';
-import {User} from '../../model/User';
+import {IUser} from '../../model/IUser';
 
 @Component({
   selector: 'app-navigation',
@@ -27,7 +27,7 @@ export class NavigationComponent implements OnDestroy, OnInit {
     media: MediaMatcher,
     private router: Router,
     private localStorage: LocalStorageService,
-    private authService: AuthService) {
+    public authService: AuthService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -35,12 +35,14 @@ export class NavigationComponent implements OnDestroy, OnInit {
 
   searchInstrument(): void {
     Swal.fire({
+      title: 'Search for company',
+      text: 'Intrinio sanbox API only supports search for Dow 30 companies',
       inputPlaceholder: 'Enter a symbol or a keyword',
       input: 'text',
       showCancelButton: true,
       confirmButtonText: 'Look up',
       showLoaderOnConfirm: true,
-      backdrop: `rgba(0,0,123,0.4)`,
+      backdrop: `#505764`,
       allowOutsideClick: () => !Swal.isLoading()
     }).then((result) => {
       if (result.value) {
@@ -50,18 +52,13 @@ export class NavigationComponent implements OnDestroy, OnInit {
     });
   }
 
-  onLogoutClick(): void {
-    this.authService.logout();
-    window.location.reload();
-    this.router.navigate(['/login']);
-    Swal.fire({
-      type: 'success',
-      title: 'Successfully Logged Out',
-      timer: 1000,
-    });
+  logout() {
+    this.authService.logOut();
+    this.router.navigate(['login']);
   }
+
   ngOnInit(): void {
-    this.authService.getAuth()
+  /*  this.authService.getAuth()
       .subscribe(auth => {
         if (auth) {
           this.isLoggedIn = true;
@@ -69,7 +66,7 @@ export class NavigationComponent implements OnDestroy, OnInit {
         } else {
           this.isLoggedIn = false;
         }
-      });
+      });*/
   }
 
   ngOnDestroy(): void {

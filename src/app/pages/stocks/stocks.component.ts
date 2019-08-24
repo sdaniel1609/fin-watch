@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {StocksService} from '../../services/stocks.service';
 import {MatTableDataSource} from '@angular/material';
-import {Company} from '../../model/company';
+import {Company} from '../../model/Company';
 
 @Component({
   selector: 'app-stocks',
   templateUrl: './stocks.component.html',
-  styleUrls: ['./stocks.component.css']
+  styleUrls: ['./stocks.component.scss']
 })
 
 

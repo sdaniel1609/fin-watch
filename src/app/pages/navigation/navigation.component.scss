@@ -9,14 +9,46 @@ $flex: 1;
   left: 0;
   right: 0;
 
+  .mat-toolbar.mat-primary {
+    background: #4f5764;
+    color: #fff;
+  }
+
   .toolbar-is-mobile .example-toolbar {
   position: fixed;
   /* Make sure the toolbar will stay on top of the content as it scrolls past. */
   z-index: 2;
   }
 
+  .nav-btns button {
+    background: none;
+    color: white;
+  }
+
+  .logo img{
+    color: white;
+  }
+
+  .icons {
+    i {
+      margin: 0 10px 0 10px;
+    }
+    i:hover {
+      cursor: pointer;
+    }
+    i:focus{
+      outline: 0;
+    }
+  }
+
   .example-sidenav-container {
     flex: $flex;
+
+    mat-nav-list {
+      i {
+        margin-right: 10px;
+      }
+    }
   }
 
   .nav-btn{
@@ -39,9 +71,4 @@ button:focus {
 
 .spacer{
   flex: $flex $flex auto;
-}
-
-.nav-btns button {
-  background-color: #673AB7;
-  color: white;
 }

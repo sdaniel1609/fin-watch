@@ -6,7 +6,6 @@ import {ICompanyInfo} from '../model/ICompanyInfo';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from 'angularfire2/firestore';
 import {DBStock} from '../model/DBStock';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -29,10 +28,6 @@ export class StocksService {
       );
   }
 
-  getStockTickerV2(companyName: string) {
-    const url = `https://api-v2.intrinio.com/companies/search?query=${companyName}`;
-    return this.http.get(url);
-  }
 
   getStockPrices(stock: string): Observable<any> {
     const url = `https://api-v2.intrinio.com/securities/${stock}/prices`
@@ -44,10 +39,6 @@ export class StocksService {
       );
   }
 
-  getStockPricesV2(stock: string) {
-    const url = `https://api-v2.intrinio.com/securities/${stock}/prices`
-    return this.http.get(url)
-  }
 
   getStockSummary(stock: string) {
     const url = `https://api-v2.intrinio.com/companies/${stock}`;

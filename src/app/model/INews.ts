@@ -6,7 +6,7 @@ export interface Company {
     cik: string;
   }
 
-  export interface News {
+  export interface INews {
     id: string;
     title: string;
     publication_date: Date;

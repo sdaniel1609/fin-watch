@@ -1,36 +1,27 @@
 <div class="toolbar-container" [class.toolbar-is-mobile]="mobileQuery.matches">
-  <mat-toolbar *ngIf="isLoggedIn" color="primary" class="example-toolbar">
-    <button mat-icon-button class="nav-btn" (click)="snav.toggle()"> <i class="fas fa-bars"></i></button>
+  <mat-toolbar  color="primary" class="example-toolbar">
+    <span class="icons">
+      <i *ngIf="authService.isUserLoggedIn()" class="material-icons" (click)="snav.toggle()">menu</i>
+    </span>
     <span class="spacer"></span>
-    <div class="nav-btns">
-      <button mat-flat-button (click)="searchInstrument()"><i class="fas fa-search"></i></button>
-      <span *ngIf="!isLoggedIn">
-         •
-        <button mat-flat-button routerLink="/login">Login</button> •
-        <button mat-flat-button routerLink="/register">Sign Up</button>
-      </span>
-      <span *ngIf="isLoggedIn">
-         •
-      <button  mat-flat-button routerLink="/users">Admin</button> •
-        <button  mat-flat-button (click)="onLogoutClick()">Logout</button>
-      </span>
+    <div *ngIf="authService.isUserLoggedIn()" class="nav-btns">
+      <button mat-flat-button matTooltip="Company Search" (click)="searchInstrument()"><i class="fas fa-search"></i></button>
     </div>
   </mat-toolbar>
   <mat-sidenav-container class="example-sidenav-container">
-    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
+    <mat-sidenav (click)="snav.toggle()" #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
                  [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
       <mat-nav-list>
-        <a mat-list-item routerLink="/dashboard">Dashboard</a>
-        <a mat-list-item routerLink="/your-stock" >Watchlist</a>
-        <a mat-list-item routerLink="/company-lookup" >Company Lookup</a>
-        <a mat-list-item routerLink="/forex" >Forex</a>
-        <a mat-list-item routerLink="/crypto">Crypto</a>
+        <a mat-list-item routerLink="/dashboard"><i class="material-icons">dashboard</i>  Dashboard</a>
+        <a mat-list-item routerLink="/your-stock" *ngIf="authService.checkAdmin()"><i class="material-icons">watch_later</i> Watchlist</a>
+        <a mat-list-item routerLink="/company-lookup" *ngIf="authService.checkAdmin()" > <i class="material-icons">search</i> Company Lookup</a>
+        <a mat-list-item routerLink="/forex" ><i class="material-icons" >attach_money</i> Forex</a>
+        <a mat-list-item routerLink="/crypto"> <i class="material-icons" >monetization_on</i> Crypto</a>
+        <a mat-list-item routerLink="/login"  (click)="logout()"> <i class="material-icons" >exit_to_app</i> Logout</a>
       </mat-nav-list>
     </mat-sidenav>
-
     <mat-sidenav-content>
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
-

@@ -6,7 +6,7 @@ import {MatTableDataSource} from '@angular/material';
 @Component({
   selector: 'app-forex',
   templateUrl: './forex.component.html',
-  styleUrls: ['./forex.component.css']
+  styleUrls: ['./forex.component.scss']
 })
 export class ForexComponent implements OnInit {
   showSpinner = true;

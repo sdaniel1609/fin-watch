@@ -5,9 +5,9 @@ Create and Push branch to remote Git repository
 2 - Push your branch to the remote repository:
     git push -u origin feature_branch_name
 
-TODO Implement local storage for recently searched - DONE
-TODO Implement 'Your stocks page' for stocks watchlist - DONE
-TODO - add delete from watchlist functionality - DONE
+3 - Revert back to older commit
+git reset --hard cedc856
+git push --force origin BRANCH NAME
 
 Git branching guide
 https://nvie.com/posts/a-successful-git-branching-model/
@@ -23,3 +23,25 @@ $ git push origin master        # update remote/master
 $ git checkout develop
 $ git pull origin master        # pull master into develop
 $ git push origin develop       # update remote/develop
+
+
+DONE_TODO Implement local storage for recently searched
+DON_TODO Implement 'Your stocks page' for stocks watchlist
+DONE_TODO - add delete from watchlist functionality
+
+DONE_TODO - Toolbar: Add icons for pages - for inspiration: https://www.stockflare.com/stock/fvib.cr
+DONE_TODO - Toolbar: add new tool bar for search
+DONE_TODO - Toolbar: change color
+DONE_TODO - Sidenav: Add icons
+DONE_TODO - Dashboard: Add price change arrow indication
+DONE_TODO - watchlist popup: add add button
+DONE_TODO - Lookup page: change layout - for inspiration: https://www.stockflare.com/stock/fvib.cr
+DONE_TODO - Lookup page: fix chart rendering bug
+TODO - remove firebase key
+
+
+
+
+
+
+

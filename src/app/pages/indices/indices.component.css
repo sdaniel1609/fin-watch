@@ -1,6 +1,7 @@
 #indexSymbol {
   font-weight: bold;
 }
+
 .green {
   color: green;
 }
@@ -8,3 +9,15 @@
 table {
   width: 100%;
 }
+
+.material-icons {
+  font-size: 15px;
+}
+
+@media only screen and (max-width: 600px) {
+  th, td {
+    font-size: 10px;
+  }
+}
+
+/*# sourceMappingURL=indices.component.css.map */

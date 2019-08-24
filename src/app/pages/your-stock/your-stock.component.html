@@ -22,37 +22,40 @@
   </div>
 </div>
 
-
 <div class="container">
   <div class="row">
     <div class="col-12">
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z2" *ngIf="companies.length > 0">
         <!-- Position Column -->
         <ng-container matColumnDef="companyName">
-          <th mat-header-cell *matHeaderCellDef> Company Name </th>
+          <th mat-header-cell *matHeaderCellDef>Name </th>
           <td mat-cell *matCellDef="let element"> {{element.name}} </td>
         </ng-container>
 
         <!-- Name Column -->
         <ng-container matColumnDef="ticker">
-          <th mat-header-cell *matHeaderCellDef> Company Ticker </th>
+          <th mat-header-cell *matHeaderCellDef>Ticker </th>
           <td mat-cell *matCellDef="let element"> {{element.ticker}} </td>
         </ng-container>
 
         <!-- Weight Column -->
         <ng-container matColumnDef="stockPrice">
-          <th mat-header-cell *matHeaderCellDef> Current Stock Price </th>
+          <th mat-header-cell *matHeaderCellDef>Price </th>
           <td mat-cell *matCellDef="let element"> {{element.currentStockPrice}} </td>
         </ng-container>
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="stockPriceChange">
-          <th mat-header-cell *matHeaderCellDef> Stock Price Change (1 Month)</th>
-          <td mat-cell *matCellDef="let element" [ngClass]="(element.getStockPriceChange(30) > 0)?'green':'red'" > {{element.getStockPriceChange(30) | percent:'1.2'}} </td>
+          <th mat-header-cell *matHeaderCellDef> 30 Days Change</th>
+          <td mat-cell *matCellDef="let element" [ngClass]="(element.getStockPriceChange(30) > 0)?'green':'red'" >
+            {{element.getStockPriceChange(30) | percent:'1.2'}}
+            <i *ngIf="element.getStockPriceChange(30) < 0" class="material-icons indicator">arrow_downward</i>
+            <i *ngIf="element.getStockPriceChange(30) > 0" class="material-icons indicator">arrow_upward</i>
+             </td>
         </ng-container>
 
         <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef>Remove from Watchlist</th>
+          <th mat-header-cell *matHeaderCellDef>Remove from IWatchlist</th>
           <td mat-cell *matCellDef="let element">
             <button id="addToWatchlist" (click)="deleteWatchListItem(element.name)"><i class="fas fa-trash-alt"></i></button>
             <!--<i class="fas fa-check-circle"></i>-->

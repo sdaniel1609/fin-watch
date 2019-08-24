@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {News} from '../model/news';
+import {HttpClient} from '@angular/common/http';
+import {INews} from '../model/INews';
 import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {map, retry} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,27 +11,22 @@ export class NewsService {
 
   private url = 'https://api-v2.intrinio.com/companies/news?page_size=5';
 
-  private companyUrl = 'https://api-v2.intrinio.com/companies/'
-
   constructor(private http: HttpClient) { }
 
-  getNews(): Observable<News[]> {
-    return this.http.get<News[]>(this.url)
+  getNews(): Observable<INews[]> {
+    return this.http.get<INews[]>(this.url)
       .pipe(
-        map(res => res ['news'])
+        map(res => res ['news']),
+        retry(2)
       );
-  }
-
-  getCompanyInfo(company: string): Observable<any> {
-    const url = `${this.companyUrl}${company}`;
-    return this.http.get(url);
   }
 
   getCompanyNews(stock: string) {
     const url = `https://api-v2.intrinio.com/companies/${stock}/news?page_size=10`;
     return this.http.get(url)
       .pipe(
-        map( res => res['news'])
+        map( res => res['news']),
+        retry(2)
       );
   }
 }

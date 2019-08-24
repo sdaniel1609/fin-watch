@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {SearchedCompany} from '../model/searchedCompany';
+import {SearchedCompany} from '../model/SearchedCompany';
 import {Observable, Subject} from 'rxjs';
 
 

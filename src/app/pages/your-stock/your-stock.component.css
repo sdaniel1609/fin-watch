@@ -23,4 +23,14 @@ table button {
   border: none;
 }
 
+.material-icons {
+  font-size: 15px;
+}
+
+@media only screen and (max-width: 600px) {
+  th, td {
+    font-size: 10px;
+  }
+}
+
 /*# sourceMappingURL=your-stock.component.css.map */

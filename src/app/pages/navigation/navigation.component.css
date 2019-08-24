@@ -7,13 +7,36 @@
   left: 0;
   right: 0;
 }
+.toolbar-container .mat-toolbar.mat-primary {
+  background: #4f5764;
+  color: #fff;
+}
 .toolbar-container .toolbar-is-mobile .example-toolbar {
   position: fixed;
   /* Make sure the toolbar will stay on top of the content as it scrolls past. */
   z-index: 2;
 }
+.toolbar-container .nav-btns button {
+  background: none;
+  color: white;
+}
+.toolbar-container .logo img {
+  color: white;
+}
+.toolbar-container .icons i {
+  margin: 0 10px 0 10px;
+}
+.toolbar-container .icons i:hover {
+  cursor: pointer;
+}
+.toolbar-container .icons i:focus {
+  outline: 0;
+}
 .toolbar-container .example-sidenav-container {
   flex: 1;
+}
+.toolbar-container .example-sidenav-container mat-nav-list i {
+  margin-right: 10px;
 }
 .toolbar-container .nav-btn {
   background: none;
@@ -33,11 +56,6 @@ button:focus {
 
 .spacer {
   flex: 1 1 auto;
-}
-
-.nav-btns button {
-  background-color: #673AB7;
-  color: white;
 }
 
 /*# sourceMappingURL=navigation.component.css.map */

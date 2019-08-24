@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {throwError} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
@@ -12,35 +12,23 @@ export class IndicesService {
 
   private url = 'https://api-v2.intrinio.com/indices/stock_market/$';
 
-  getIndexValue(index: string) {
-    const url = `${this.url}${index}/data_point/level/number`;
-    return this.http.get(url)
-      .pipe(
-        catchError(this.handleError));
-  }
 
   getIndexValueRR(index: string) {
     const url = `${this.url}${index}/data_point/level/number`;
-    return this.http.get<number>(url);
+    return this.http.get<number>(url)
+      .pipe(
+        catchError(this.handleError)
+      );
   }
 
   getIndexHistoricalValueRR(index: string) {
     const url = `${this.url}${index}/historical_data/level`;
-    return this.http.get(url);
-  }
-
-  getIndexHistoricalValue(index: string) {
-    const url = `${this.url}${index}/historical_data/level`;
     return this.http.get(url)
       .pipe(
-        map(res => res['historical_data'])
+        catchError(this.handleError)
       );
   }
 
-  searchIndex(query: string) {
-    const url = `https://api-v2.intrinio.com/indices/stock_market/search?query=${query}`;
-    return this.http.get(url);
-  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

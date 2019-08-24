@@ -3,12 +3,15 @@ import {StocksService} from '../../services/stocks.service';
 import {Chart} from 'chart.js';
 import {NewsService} from '../../services/news.service';
 import {ActivatedRoute} from '@angular/router';
-import {IStockPrice} from '../../model/StockPrice';
+import {IStockPrice} from '../../model/IStockPrice';
+import {FinancialsService} from '../../services/financials.service';
+import {Financials} from '../../model/Financials';
+
 
 @Component({
   selector: 'app-company-lookup',
   templateUrl: './company-lookup.component.html',
-  styleUrls: ['./company-lookup.component.css']
+  styleUrls: ['./company-lookup.component.scss']
 })
 export class CompanyLookupComponent implements OnInit {
 
@@ -21,23 +24,38 @@ export class CompanyLookupComponent implements OnInit {
   stockPriceInfo: IStockPrice;
   news = [];
   chart: Chart;
+  loadedTicker = 0;
+  financials: Financials;
 
   constructor(private stocksService: StocksService,
               private newsService: NewsService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private financialReports: FinancialsService) { }
 
   getStockTicker(): void {
       this.stocksService.getStockTicker(this.companyName)
         .subscribe(
-          (res => {this.company = res; }),
+          (res => {
+            if (res === undefined) {
+              this.loadedTicker = 1;
+              return;
+            } else {
+              this.company = res,
+              this.loadedTicker = 2;
+            }
+            }),
           (error1 => console.log(error1)),
           (() => {
-            this.loadData();
-            this.getStockSummary();
-            this.getStockNews();
+            if (this.loadedTicker === 2) {
+              this.loadData();
+              this.getStockSummary();
+              this.getStockNews();
+              this.getCompanyFinancials();
+            }
           })
         );
     }
+
 
   getStockSummary(): void {
     this.stocksService.getStockSummary(this.company.ticker)
@@ -47,6 +65,13 @@ export class CompanyLookupComponent implements OnInit {
   getStockNews(): void {
     this.newsService.getCompanyNews(this.company.ticker)
       .subscribe(res => this.news = res);
+  }
+
+  getCompanyFinancials(): void {
+    this.financialReports.getCompanyFinancials(this.company.ticker)
+      .subscribe(response => {
+        this.financials = response;
+      });
   }
 
   loadData(): void {

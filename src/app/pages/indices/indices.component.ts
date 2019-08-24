@@ -2,14 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {IndicesService} from '../../services/indices.service';
 import {MatTableDataSource} from '@angular/material';
 import {forkJoin} from 'rxjs';
-import {Index} from '../../model';
-
-
+import {Index} from '../../model/Index';
 
 @Component({
   selector: 'app-indices',
   templateUrl: './indices.component.html',
-  styleUrls: ['./indices.component.css']
+  styleUrls: ['./indices.component.scss']
 })
 
 export class IndicesComponent implements OnInit {
@@ -51,7 +49,6 @@ export class IndicesComponent implements OnInit {
      });
    });
   }
-
   ngOnInit() {
   this.getIndices();
   }
