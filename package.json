@@ -26,7 +26,7 @@
     "@types/chart.js": "^2.7.53",
     "angular-chart.js": "^1.1.1",
     "angularfire2": "^5.2.0",
-    "chart.js": "^2.8.0",
+    "chart.js": "^2.9.4",
     "core-js": "^2.6.9",
     "firebase": "^5.11.1",
     "ng2-charts": "2.2.3",
